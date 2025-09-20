@@ -1,0 +1,76 @@
+<div class="p-0 bg-gray-100 min-h-screen">
+  <!-- <h1 class="text-2xl font-bold text-blue-700 mb-6">
+    Upload Result for My Students
+  </h1> -->
+
+  <div class="bg-white shadow rounded-lg p-6">
+    <form (ngSubmit)="uploadResult()" #resultForm="ngForm" class="space-y-4">
+      
+      <!-- Student Select -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Select Student</label>
+        <select
+          [(ngModel)]="formData.studentId"
+          name="studentId"
+          required
+          class="w-full border rounded-lg p-3"
+        >
+          <option value="">-- Select Student --</option>
+          <option *ngFor="let student of students" [value]="student.id">
+            {{ student.name }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Subject -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+        <input
+          type="text"
+          [(ngModel)]="formData.subject"
+          name="subject"
+          placeholder="e.g., Mathematics"
+          required
+          class="w-full border rounded-lg p-3"
+        />
+      </div>
+
+      <!-- Score -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Score</label>
+        <input
+          type="number"
+          [(ngModel)]="formData.score"
+          name="score"
+          placeholder="Enter score"
+          required
+          class="w-full border rounded-lg p-3"
+        />
+      </div>
+
+      <!-- Grade -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Grade</label>
+        <input
+          type="text"
+          [(ngModel)]="formData.grade"
+          name="grade"
+          placeholder="e.g., A+"
+          required
+          class="w-full border rounded-lg p-3"
+        />
+      </div>
+
+      <!-- Submit Button -->
+      <div>
+        <button
+          type="submit"
+          [disabled]="resultForm.invalid"
+          class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg flex items-center gap-2"
+        >
+          <i class="fas fa-upload"></i> Upload Result
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

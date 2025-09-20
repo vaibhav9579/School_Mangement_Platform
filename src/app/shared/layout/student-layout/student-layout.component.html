@@ -1,0 +1,79 @@
+<div class="flex h-screen bg-gray-100">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-blue-800 text-white flex flex-col">
+    <!-- Logo -->
+    <div class="px-4 py-6 flex items-center gap-2 border-b border-blue-700">
+      <span class="text-lg font-bold tracking-wide">CONTROL CAMPUS</span>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex-1 p-4 space-y-2">
+
+      <a (click)="navigateToRouter('dashboard')" routerLinkActive="bg-blue-700"
+         class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+        <i class="bi bi-house w-5 text-center"></i> Dashboard
+      </a>
+      <a (click)="navigateToRouter('my-profile')" routerLinkActive="bg-blue-700"
+         class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+        <i class="bi bi-person-badge w-5 text-center"></i> My Profile & Id
+      </a>
+      <a (click)="navigateToRouter('manage-teachers')" routerLinkActive="bg-blue-700"
+         class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+        <i class="bi bi-journal-check w-5 text-center"></i> View Results
+      </a>
+      <a (click)="navigateToRouter('fee-management')" routerLinkActive="bg-blue-700"
+         class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+        <i class="bi bi-download w-5 text-center"></i> Download Homework
+      </a>
+      <a (click)="navigateToRouter('result-upload')" routerLinkActive="bg-blue-700"
+         class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+        <i class="bi bi-clipboard-check w-5 text-center"></i> Attendance Report
+      </a>
+      <a (click)="navigateToRouter('id-card')" routerLinkActive="bg-blue-700"
+         class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+        <i class="bi bi-cash-coin w-5 text-center"></i> Fee Status
+      </a>
+      <a (click)="navigateToRouter('notifications')" routerLinkActive="bg-blue-700"
+         class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+        <i class="bi bi-chat-dots w-5 text-center"></i> Chat With Teacher
+      </a>
+      <a (click)="navigateToRouter('notifications')" routerLinkActive="bg-blue-700"
+         class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+        <i class="bi bi-bell w-5 text-center"></i> Anna
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content Area -->
+  <div class="flex-1 flex flex-col">
+    <!-- Top Header -->
+    <header class="bg-white shadow px-6 py-4 flex justify-between items-center">
+      <h1 class="text-xl font-semibold text-gray-700">Student</h1>
+
+      <!-- Student User Dropdown -->
+      <div class="relative group">
+        <button class="flex items-center gap-2 focus:outline-none">
+          <span class="text-gray-700"> User (Student)</span>
+          <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white">
+            <i class="bi bi-person"></i>
+          </div>
+        </button>
+        <div class="absolute right-0 mt-2 w-40 bg-white rounded shadow-lg hidden group-hover:block">
+          <button (click)="logout()" class="flex items-center gap-2 w-full px-4 py-2 hover:bg-gray-100 text-gray-700">
+            <i class="bi bi-box-arrow-right"></i> Logout
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page Title Bar -->
+    <div class="bg-gray-200 px-6 py-3 text-lg font-medium text-gray-700">
+      {{ pageTitle }}
+    </div>
+
+    <!-- Main Router Content -->
+    <main class="flex-1 p-6 overflow-auto border-b">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

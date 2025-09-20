@@ -1,0 +1,18 @@
+@font-face { 
+    font-family: "robotronfontpica"; 
+    font-weight: normal; 
+    font-style: normal; 
+    src: url("./robotronfontpica.woff") format('woff'); 
+}
+@font-face { 
+    font-family: "robotronfontelit"; 
+    font-weight: normal; 
+    font-style: normal; 
+    src: url("./robotronfontelit.woff") format('woff'); 
+}
+@font-face { 
+    font-family: "robotronfontsper"; 
+    font-weight: normal; 
+    font-style: normal; 
+    src: url("./robotronfontsper.woff") format('woff'); 
+}

@@ -1,0 +1,58 @@
+<div class="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-400 via-purple-400 to-pink-400">
+  <div class="bg-white shadow-2xl border border-gray-200 rounded-2xl p-10 w-full max-w-md">
+    <div class="flex flex-col items-center mb-6">
+      <img src="assets/logo.png" alt="Logo" class="w-16 h-16 mb-2 rounded-full shadow-lg" />
+      <h2 class="text-3xl font-extrabold text-center text-gray-800 mb-2 tracking-wide">
+        Welcome Back
+      </h2>
+      <p class="text-gray-500 text-sm">Sign in to your account</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="login()" class="space-y-6">
+      <!-- Username -->
+      <mat-form-field appearance="fill" class="w-full rounded-xl bg-gray-50 focus-within:bg-white transition">
+        <mat-label>Username</mat-label>
+        <mat-icon matPrefix class="text-blue-400">person</mat-icon>
+        <input matInput placeholder="Enter username" formControlName="username" class="rounded-xl" />
+        <mat-error *ngIf="form.get('username')?.hasError('required')">
+          Username is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Password -->
+      <mat-form-field appearance="fill" class="w-full rounded-xl bg-gray-50 focus-within:bg-white transition">
+        <mat-label>Password</mat-label>
+        <mat-icon matPrefix class="text-purple-400">lock</mat-icon>
+        <input
+          matInput
+          [type]="hidePassword ? 'password' : 'text'"
+          placeholder="Enter password"
+          formControlName="password"
+          class="rounded-xl"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="togglePassword()"
+        >
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="form.get('password')?.hasError('required')">
+          Password is required
+        </mat-error>
+      </mat-form-field>
+
+      <div class="flex items-center justify-between">
+        <span class="text-gray-500 text-xs">Don't share your credentials</span>
+        <a href="#" class="text-blue-500 hover:underline text-sm font-medium">Forgot Password?</a>
+      </div>
+
+      <!-- Submit Button -->
+      <button mat-raised-button color="primary" type="submit" class="w-full transition duration-200 hover:scale-105 hover:shadow-lg">
+        <mat-icon class="mr-2">login</mat-icon>
+        Login
+      </button>
+    </form>
+  </div>
+</div>

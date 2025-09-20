@@ -1,0 +1,8 @@
+::ng-deep .mat-mdc-table {
+  font-size: 18px; /* or Tailwind via @apply */
+}
+
+::ng-deep .mat-mdc-header-cell {
+  font-size: 20px;
+  font-weight: 600;
+}

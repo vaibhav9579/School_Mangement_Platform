@@ -1,0 +1,33 @@
+<div class="p-0 bg-gray-100 min-h-screen">
+  <!-- <h1 class="text-2xl font-bold text-blue-700 mb-6">Students Assigned to Me</h1> -->
+
+  <div class="bg-white shadow rounded-lg overflow-hidden">
+    <table class="w-full text-left border-collapse">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="px-6 py-3 text-sm font-semibold text-gray-600">ID</th>
+          <th class="px-6 py-3 text-sm font-semibold text-gray-600">NAME</th>
+          <th class="px-6 py-3 text-sm font-semibold text-gray-600">CLASS</th>
+          <th class="px-6 py-3 text-sm font-semibold text-gray-600">EMAIL</th>
+          <th class="px-6 py-3 text-sm font-semibold text-gray-600">ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of students" class="border-b hover:bg-gray-50">
+          <td class="px-6 py-3 text-gray-700">{{ student.id }}</td>
+          <td class="px-6 py-3 font-semibold text-gray-800">{{ student.name }}</td>
+          <td class="px-6 py-3 text-gray-700">{{ student.class }}</td>
+          <td class="px-6 py-3 text-gray-700">{{ student.email }}</td>
+          <td class="px-6 py-3">
+            <button
+              (click)="viewDetails(student)"
+              class="text-blue-500 hover:underline flex items-center gap-1"
+            >
+              <i class="fas fa-eye"></i> View Details
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

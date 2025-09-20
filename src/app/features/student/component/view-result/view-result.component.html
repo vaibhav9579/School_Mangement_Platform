@@ -1,0 +1,33 @@
+<div class="p-6 bg-gray-100 min-h-screen">
+  <!-- Page Title -->
+  <h1 class="text-2xl font-bold text-blue-800 mb-6">View Results</h1>
+
+  <!-- Results Card -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-lg font-bold text-blue-800 mb-4">My Academic Results</h2>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-gray-100 text-gray-600 uppercase text-sm">
+            <th class="py-3 px-4">Subject</th>
+            <th class="py-3 px-4">Score</th>
+            <th class="py-3 px-4">Grade</th>
+            <th class="py-3 px-4">Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let result of results"
+            class="border-t hover:bg-gray-50 transition"
+          >
+            <td class="py-3 px-4">{{ result.subject }}</td>
+            <td class="py-3 px-4">{{ result.score }}</td>
+            <td class="py-3 px-4 text-blue-600 font-medium">{{ result.grade }}</td>
+            <td class="py-3 px-4">{{ result.date }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

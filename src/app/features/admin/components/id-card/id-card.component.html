@@ -1,0 +1,30 @@
+<div class="card shadow p-0">
+  <!-- <h4 class="mb-3">Generate ID Card for Student</h4> -->
+
+  <div class="d-flex gap-2">
+    <select class="form-select" [(ngModel)]="selectedStudentId">
+      <option value="">-- Select Student to Generate ID --</option>
+      <option *ngFor="let student of students" [value]="student.id">
+        {{ student.name }}
+      </option>
+    </select>
+
+    <button class="btn btn-primary" (click)="generateIdCard()">
+      <i class="bi bi-person-badge"></i> Generate ID Card
+    </button>
+  </div>
+
+  <div class="mt-4 border rounded p-3 text-center" *ngIf="generatedStudent">
+    <h5>ID Card Preview</h5>
+    <div class="border p-3 d-inline-block">
+      <h6>{{ generatedStudent.name }}</h6>
+      <p><strong>ID:</strong> {{ generatedStudent.id }}</p>
+      <p><strong>Class:</strong> {{ generatedStudent.class }}</p>
+      <p><strong>DOB:</strong> {{ generatedStudent.dob }}</p>
+    </div>
+  </div>
+
+  <div class="mt-4 text-muted" *ngIf="!generatedStudent">
+    Select a student and click 'Generate ID Card' to see a preview.
+  </div>
+</div>

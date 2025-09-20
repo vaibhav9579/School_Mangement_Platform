@@ -1,0 +1,8 @@
+/* Keep styles minimal since Tailwind handles most */
+:host {
+  display: block;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}

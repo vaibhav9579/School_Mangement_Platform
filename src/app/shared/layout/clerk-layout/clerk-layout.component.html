@@ -1,0 +1,76 @@
+<div class="flex h-screen bg-gray-100">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-blue-800 text-white flex flex-col cursor-pointer">
+    <!-- Logo -->
+    <div class="px-4 py-6 flex items-center gap-2 border-b border-blue-700">
+      <span class="text-lg font-bold tracking-wide">CONTROL CAMPUS</span>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex-1 p-4 space-y-2">
+      <a (click)="navigateToSelDash('dashboard')" routerLinkActive="bg-blue-700"
+        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+        <i class="bi bi-house w-5 text-center"></i> Dashboard
+      </a>
+
+      <a (click)="navigateToSelDash('admission')" routerLinkActive="bg-blue-700"
+        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+        <i class="bi bi-person-badge w-5 text-center"></i> Admission
+      </a>
+
+      <a (click)="navigateToSelDash('fee')" routerLinkActive="bg-blue-700"
+        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+        <i class="bi bi-people w-5 text-center"></i>Fee Management
+      </a>
+
+      <a (click)="navigateToSelDash('attendence')" routerLinkActive="bg-blue-700"
+        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+        <i class="bi bi-calendar w-5 text-center"></i> Attendence Reports
+      </a>
+
+      <a (click)="navigateToSelDash('studentrecord')" routerLinkActive="bg-blue-700"
+        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+        <i class="bi bi-person-video3 w-5 text-center"></i>Student Records
+      </a>
+
+      <a (click)="navigateToSelDash('teacherreacord')" routerLinkActive="bg-blue-700"
+        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+        <i class="bi bi-person-video3 w-5 text-center"></i>Teacher Records
+      </a>
+
+      <a (click)="navigateToSelDash('teacherreacord')" routerLinkActive="bg-blue-700"
+        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+        <i class="bi bi-cash-stack w-5 text-center"></i>Payment
+      </a>
+
+    </nav>
+  </aside>
+
+  <!-- Main Content Area -->
+  <div class="flex-1 flex flex-col">
+    <!-- Top Header -->
+    <header class="bg-blue-800 text-white shadow px-6 py-4 flex justify-between items-center">
+      <h1 class="text-xl font-semibold ">{{ pageTitle }}</h1>
+
+      <!-- Admin User Dropdown -->
+      <div class="relative group">
+        <button class="flex items-center gap-2 focus:outline-none">
+          <span class="text-white">{{_userName}} <b>({{_userRole}})</b></span>
+          <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white">
+            <i class="bi bi-person"></i>
+          </div>
+        </button>
+        <div class="absolute right-0 w-40 bg-white rounded shadow-lg hidden group-hover:block">
+          <button (click)="logout()" class="flex items-center gap-2 w-full px-4 py-2 hover:bg-gray-100 text-gray-700">
+            <i class="bi bi-box-arrow-right"></i> Logout
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Router Content -->
+    <main class="flex-1 p-0 overflow-auto border-b">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

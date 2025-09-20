@@ -1,0 +1,47 @@
+<div class="p-0 bg-gray-100 min-h-screen">
+  <!-- <h1 class="text-2xl font-bold text-blue-700 mb-6">
+    Mark Attendance
+  </h1> -->
+
+  <div class="bg-white shadow rounded-lg p-6">
+    <h2 class="text-lg font-semibold text-blue-700 mb-4">
+      Attendance for Today ({{ todayDate }})
+    </h2>
+
+    <table class="w-full text-left">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="p-3 text-gray-600 text-sm font-medium">STUDENT NAME</th>
+          <th class="p-3 text-gray-600 text-sm font-medium">CLASS</th>
+          <th class="p-3 text-gray-600 text-sm font-medium">STATUS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of attendanceList; let i = index" class="border-b">
+          <td class="p-3">{{ student.name }}</td>
+          <td class="p-3">{{ student.class }}</td>
+          <td class="p-3">
+            <select
+              [(ngModel)]="student.status"
+              name="status{{i}}"
+              class="border rounded-lg p-2 w-40"
+            >
+              <option value="Present">Present</option>
+              <option value="Absent">Absent</option>
+              <option value="Leave">Leave</option>
+            </select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="mt-6">
+      <button
+        (click)="saveAttendance()"
+        class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg flex items-center gap-2"
+      >
+        <i class="fas fa-save"></i> Save Attendance
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+<div class="max-w-md mx-auto p-6 bg-white shadow-md rounded-xl mt-6">
+  <h2 class="text-xl font-semibold text-gray-800 mb-4 text-center">Allocate Leave</h2>
+
+  <form [formGroup]="leaveForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <!-- Select User -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Select User</label>
+      <select formControlName="userId" class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+        <option value="">-- Select --</option>
+        <option *ngFor="let role of roles" [value]="role">
+          {{ role }}
+        </option>
+      </select>
+      <div *ngIf="leaveForm.get('userId')?.invalid && leaveForm.get('userId')?.touched" class="text-red-500 text-sm">
+        User is required.
+      </div>
+    </div>
+
+    <!-- Select Leave Type -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Leave Type</label>
+      <select formControlName="leaveType" class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+        <option value="">-- Select --</option>
+        <option *ngFor="let type of leaveTypes" [value]="type">{{ type }}</option>
+      </select>
+      <div *ngIf="leaveForm.get('leaveType')?.invalid && leaveForm.get('leaveType')?.touched" class="text-red-500 text-sm">
+        Leave type is required.
+      </div>
+    </div>
+
+    <!-- Total Allowed Leaves -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Total Allowed</label>
+      <input type="number" formControlName="totalAllowed"
+        class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Enter number of leaves" />
+      <div *ngIf="leaveForm.get('totalAllowed')?.invalid && leaveForm.get('totalAllowed')?.touched" class="text-red-500 text-sm">
+        Enter a valid number.
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <button type="submit"
+      [disabled]="isSubmitting"
+      class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 disabled:opacity-50">
+      {{ isSubmitting ? 'Allocating...' : 'Allocate Leave' }}
+    </button>
+  </form>
+
+  <!-- Message -->
+  <div *ngIf="message" class="mt-4 text-center text-sm text-green-600">
+    {{ message }}
+  </div>
+</div>

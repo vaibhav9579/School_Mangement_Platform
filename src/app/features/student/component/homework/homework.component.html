@@ -1,0 +1,48 @@
+<div class="p-6 bg-gray-100 min-h-screen">
+  <!-- Page Title -->
+  <h1 class="text-2xl font-bold text-blue-800 mb-6">Download Homework</h1>
+
+  <!-- Homework Card -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-lg font-bold text-blue-800 mb-4">
+      My Assigned Homeworks (Class: {{ studentClass }})
+    </h2>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-gray-100 text-gray-600 uppercase text-sm">
+            <th class="py-3 px-4">Subject</th>
+            <th class="py-3 px-4">Title</th>
+            <th class="py-3 px-4">Assigned By</th>
+            <th class="py-3 px-4">Due Date</th>
+            <th class="py-3 px-4">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="homeworks.length === 0">
+            <td colspan="5" class="py-4 px-4 text-center text-gray-500">
+              No homework assignments found.
+            </td>
+          </tr>
+          <tr
+            *ngFor="let hw of homeworks"
+            class="border-t hover:bg-gray-50 transition"
+          >
+            <td class="py-3 px-4">{{ hw.subject }}</td>
+            <td class="py-3 px-4">{{ hw.title }}</td>
+            <td class="py-3 px-4">{{ hw.assignedBy }}</td>
+            <td class="py-3 px-4">{{ hw.dueDate }}</td>
+            <td class="py-3 px-4">
+              <button
+                class="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded"
+              >
+                Download
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

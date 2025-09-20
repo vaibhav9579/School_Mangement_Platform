@@ -1,0 +1,86 @@
+<div class="p-0 bg-gray-100 min-h-screen">
+
+  <!-- Assigned Classes -->
+  <!-- <div class="bg-white shadow rounded-lg p-6 mb-8">
+    <h2 class="text-xl font-semibold text-blue-700 mb-2">My Class</h2>
+    <div *ngFor="let className of assignedClasses" class="text-gray-700">
+      {{ className }}
+    </div>
+  </div> -->
+
+
+  <!-- Summary Cards -->
+  <!-- <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="bg-white shadow rounded-lg p-6 text-center">
+      <div class="text-blue-500 text-4xl mb-2">
+        <i class="bi bi-mortarboard"></i>
+      </div>
+      <div class="text-3xl font-bold">{{ myStudents }}</div>
+      <div class="text-gray-600">My Students</div>
+    </div>
+
+    <div class="bg-white shadow rounded-lg p-6 text-center">
+      <div class="text-blue-500 text-4xl mb-2">
+        <i class="bi bi-building"></i>
+      </div>
+      <div class="text-3xl font-bold">{{ assignedClassesCount }}</div>
+      <div class="text-gray-600">Assigned Classes</div>
+    </div>
+
+    <div class="bg-white shadow rounded-lg p-6 text-center">
+      <div class="text-blue-500 text-4xl mb-2">
+        <i class="bi bi-clipboard-check"></i>
+      </div>
+      <div class="text-3xl font-bold">{{ homeworkAssigned }}</div>
+      <div class="text-gray-600">Homework Assigned</div>
+    </div>
+  </div> -->
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-center text-4xl">
+    <div class="bg-yellow-400 text-white p-6 rounded-xl shadow-md text-center text-4xl">
+      <i class="bi bi-building"></i>
+      <p class="text-lg opacity-80">My Class</p>
+      <!-- <h2 class="text-3xl font-bold">{{ assignedClassesCount}}</h2> -->
+      <h2 class="text-3xl font-bold" *ngFor="let className of assignedClasses">{{ className }}</h2>
+
+    </div>
+
+    <div class="bg-blue-400 text-white p-6 rounded-xl shadow-md text-4xl">
+      <i class="bi bi-mortarboard"></i>
+      <p class="text-lg opacity-80">My Students</p>
+      <h2 class="text-3xl font-bold">{{ myStudents | number }}</h2>
+    </div>
+    <div class="bg-green-400 text-white p-6 rounded-xl shadow-md text-center text-4xl">
+      <i class="bi bi-clipboard-check"></i>
+      <p class="text-lg opacity-80 ">Homework Assign</p>
+      <h2 class="text-3xl font-bold">{{ homeworkAssigned | number }}</h2>
+    </div>
+
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="bg-white shadow rounded-lg p-6">
+    <h2 class="text-xl font-semibold text-blue-700 mb-4">Quick Actions</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <button (click)="markAttendance()"
+        class="bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg shadow flex items-center justify-center gap-2">
+        <i class="bi bi-calendar-check"></i> Mark Attendance
+      </button>
+
+      <button (click)="uploadResults()"
+        class="bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg shadow flex items-center justify-center gap-2">
+        <i class="bi bi-upload"></i> Upload Results
+      </button>
+
+      <button (click)="assignHomework()"
+        class="bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg shadow flex items-center justify-center gap-2">
+        <i class="bi bi-journal-text"></i> Assign Homework
+      </button>
+
+      <button (click)="chatWithStudents()"
+        class="bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg shadow flex items-center justify-center gap-2">
+        <i class="bi bi-chat-dots"></i> Chat with Students
+      </button>
+    </div>
+  </div>
+</div>
