@@ -9,29 +9,28 @@ import { ChatComponent } from './components/chat/chat.component';
 import { AttendanceComponent } from './components/attendance/attendance.component';
 import { MyLeaveComponent } from './components/my-leave/my-leave.component';
 import { StudentLeaveComponent } from './components/student-leave/student-leave.component';
-
+import { LeaveRequestFormComponent } from '../../features/teacher/components/leave-request-form/leave-request-form.component';
+import { LeaveRequestComponent } from './components/leave-request/leave-request.component';
 export const TEACHER_ROUTES: Routes = [
   {
     path: '',
     loadComponent: () => import('../../shared/layout/teacher-layout/teacher-layout.component').then(m => m.TeacherLayoutComponent),
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      {path :'dashboard', component: DashboardComponent},
+      {path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      {path: 'dashboard', component: DashboardComponent},
       {path: 'my-students', component: MyStudentsComponent },
-      {path : 'upload-result', component: UploadResultComponent},
-      {path : 'assign-homework', component: AssignHomeworkComponent},
+      {path: 'upload-result', component: UploadResultComponent},
+      {path: 'assign-homework', component: AssignHomeworkComponent},
       {path: 'chat', component: ChatComponent},
       {path: 'attendance', component: AttendanceComponent},
       {path: 'studentLeave', component : StudentLeaveComponent },
       {path: 'myleave', component: MyLeaveComponent },
-      
-      // { path: 'dashboard', loadComponent: () => import('../../features/teacher/dashboard.component').then(m => m.TeacherDashboardComponent) },
-      // { path: 'attendance', loadComponent: () => import('../../features/teacher/attendance.component').then(m => m.TeacherAttendanceComponent) },
+      {path: 'leaverequest', component: LeaveRequestComponent },
     ]
   }
 ];
-// @NgModule({
 
+// @NgModule({
 //   declarations: [],
 //   imports : [RouterModule.forChild(TEACHER_ROUTES)],
 //   exports : []

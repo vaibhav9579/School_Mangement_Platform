@@ -40,11 +40,16 @@ export class TeacherLayoutComponent  implements OnInit{
     else if (url.includes('attendance')) this.pageTitle = 'Attendance';
     else if (url.includes('studentLeave')) this.pageTitle = 'Student Leave';
     else if (url.includes('myleave')) this.pageTitle = 'My Leave';
+    else if (url.includes('leaverequest')) this.pageTitle = 'Leave Request';
     else this.pageTitle = '';
     }
 
   logout() {
     // TODO: Add auth service logout logic
     this.router.navigate(['/login']);
+  }
+
+  navigateToSelectedPage(selectedPage: string) {
+    this.router.navigate([`/teacher/${selectedPage}`]);
   }
 }

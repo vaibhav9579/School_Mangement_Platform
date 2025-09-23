@@ -42,6 +42,7 @@ export class ClerkLayoutComponent {
     else if (url.includes('studentrecord')) this.pageTitle = 'Manage Student Records';
     else if (url.includes('teacherreacord')) this.pageTitle = 'Manage Teacher Records';
     else if (url.includes('payment')) this.pageTitle = 'Payment Management';
+    else if (url.includes('admission-confirm')) this.pageTitle = "Admission Confirmation";
     // else if (url.includes('notification')) this.pageTitle = 'Notifications';
     else this.pageTitle = '';
   }
@@ -80,6 +81,10 @@ export class ClerkLayoutComponent {
         this.router.navigate(['clerk/teacherrecord']);
         break;
 
+      case "admission-confirm":
+        this.router.navigate(['clerk/admission-confirm']);
+        break;
+        
       case "payment":
         this.router.navigate(['clerk/payment']);
         break;

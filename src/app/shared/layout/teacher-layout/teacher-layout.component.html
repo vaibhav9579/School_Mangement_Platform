@@ -8,37 +8,42 @@
 
     <!-- Navigation -->
     <nav class="flex-1 p-4 space-y-2">
-      <a routerLink="dashboard" routerLinkActive="bg-blue-700"
-         class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+      <a (click)="navigateToSelectedPage('dashboard')" routerLinkActive="bg-blue-700"
+        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
         <i class="bi bi-house w-5 text-center"></i> Dashboard
       </a>
-      <a routerLink="my-students" routerLinkActive="bg-blue-700"
-         class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+      <a (click)="navigateToSelectedPage('my-students')" routerLinkActive="bg-blue-700"
+        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
         <i class="bi bi-mortarboard w-5 text-center"></i> My Students
       </a>
-      <a routerLink="upload-result" routerLinkActive="bg-blue-700"
-         class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+      <a (click)="navigateToSelectedPage('upload-result')" routerLinkActive="bg-blue-700"
+        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
         <i class="bi bi-easel w-5 text-center"></i> Upload Result
       </a>
-      <a routerLink="attendance" routerLinkActive="bg-blue-700"
-         class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+      <a (click)="navigateToSelectedPage('attendance')" routerLinkActive="bg-blue-700"
+        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
         <i class="bi bi-calendar-check w-5 text-center"></i> Attendance
       </a>
-      <a routerLink="assign-homework" routerLinkActive="bg-blue-700"
-         class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+      <a (click)="navigateToSelectedPage('assign-homework')" routerLinkActive="bg-blue-700"
+        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
         <i class="bi bi-journal-text w-5 text-center"></i> Assign Homework
       </a>
-      <a routerLink="chat" routerLinkActive="bg-blue-700"
-         class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+      <a (click)="navigateToSelectedPage('chat')" routerLinkActive="bg-blue-700"
+        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
         <i class="bi bi-chat-dots w-5 text-center"></i> Chat
       </a>
-            <a routerLink="studentLeave" routerLinkActive="bg-blue-700"
-         class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+      <a (click)="navigateToSelectedPage('studentLeave')" routerLinkActive="bg-blue-700"
+        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
         <i class="bi bi-chat-dots w-5 text-center"></i> Student Leave
       </a>
 
-            <a routerLink="myleave" routerLinkActive="bg-blue-700"
-         class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+      <a (click)="navigateToSelectedPage('leaverequest')" routerLinkActive="bg-blue-700"
+        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+        <i class="bi bi-chat-dots w-5 text-center"></i> Leave Request
+      </a>
+
+      <a (click)="navigateToSelectedPage('myleave')" routerLinkActive="bg-blue-700"
+        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
         <i class="bi bi-chat-dots w-5 text-center"></i> My Leave
       </a>
 

@@ -1,96 +1,68 @@
-<div class="container">
-  <h2>Student Admission</h2>
+<!-- admission-dashboard.component.html -->
+<div class="p-4 bg-gray-50 min-h-screen">
+  <div class="max-w-5xl mx-auto space-y-4">
+    <div class="flex justify-between items-center">
+      <h1 class="text-xl font-bold">Student Admissions</h1>
+      <button (click)="newAdmission()" class="bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-4 py-2">+ New Admission</button>
+    </div>
 
-  <!-- Student Form -->
-  <!-- <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
-    <mat-form-field appearance="fill">
-      <mat-label>Name</mat-label>
-      <input matInput formControlName="name">
-    </mat-form-field>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div class="bg-white p-4 rounded-xl shadow text-center">
+        <div class="text-sm text-gray-500">Pending</div>
+        <div class="text-2xl font-bold text-yellow-600">{{ stats.pending }}</div>
+      </div>
+      <div class="bg-white p-4 rounded-xl shadow text-center">
+        <div class="text-sm text-gray-500">Approved</div>
+        <div class="text-2xl font-bold text-green-600">{{ stats.approved }}</div>
+      </div>
+      <div class="bg-white p-4 rounded-xl shadow text-center">
+        <div class="text-sm text-gray-500">Rejected</div>
+        <div class="text-2xl font-bold text-red-600">{{ stats.rejected }}</div>
+      </div>
+      <div class="bg-white p-4 rounded-xl shadow text-center">
+        <div class="text-sm text-gray-500">Drafts</div>
+        <div class="text-2xl font-bold text-gray-800">{{ stats.drafts }}</div>
+      </div>
+    </div>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Email</mat-label>
-      <input matInput formControlName="email">
-    </mat-form-field>
+    <div class="bg-white p-3 rounded-xl shadow flex flex-wrap gap-3">
+      <select [(ngModel)]="filter.department" class="border rounded p-2">
+        <option value="">Department</option>
+      </select>
+      <select [(ngModel)]="filter.klass" class="border rounded p-2">
+        <option value="">Class</option>
+      </select>
+      <select [(ngModel)]="filter.section" class="border rounded p-2">
+        <option value="">Section</option>
+      </select>
+    </div>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Mobile</mat-label>
-      <input matInput formControlName="mobile">
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Marks</mat-label>
-      <input matInput type="number" formControlName="marks">
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Status</mat-label>
-      <mat-select formControlName="status">
-        <mat-option value="pending">Pending</mat-option>
-        <mat-option value="approved">Approved</mat-option>
-        <mat-option value="rejected">Rejected</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Class Assigned</mat-label>
-      <input matInput formControlName="classAssigned">
-    </mat-form-field>
-
-    <button mat-raised-button color="primary" type="submit">
-      {{ isEditMode ? 'Update Student' : 'Add Student' }}
-    </button>
-    <button mat-button type="button" (click)="resetForm()">Reset</button>
-  </form>
-  <hr> -->
-
-  <!-- Student Table -->
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 full-width-table">
-
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef>ID</th>
-      <td mat-cell *matCellDef="let student">{{ student.id }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Name</th>
-      <td mat-cell *matCellDef="let student">{{ student.name }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef>Email</th>
-      <td mat-cell *matCellDef="let student">{{ student.email }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="mobile">
-      <th mat-header-cell *matHeaderCellDef>Mobile</th>
-      <td mat-cell *matCellDef="let student">{{ student.mobile }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="marks">
-      <th mat-header-cell *matHeaderCellDef>Marks</th>
-      <td mat-cell *matCellDef="let student">{{ student.marks }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef>Status</th>
-      <td mat-cell *matCellDef="let student">{{ student.status }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="classAssigned">
-      <th mat-header-cell *matHeaderCellDef>Class</th>
-      <td mat-cell *matCellDef="let student">{{ student.classAssigned }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>Actions</th>
-      <td mat-cell *matCellDef="let student">
-        <button mat-button color="primary" (click)="editStudent(student)">Edit</button>
-        <button mat-button color="warn" (click)="deleteStudent(student.id!)">Delete</button>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="['id','name','email','mobile','marks','status','classAssigned','actions']"></tr>
-    <tr mat-row *matRowDef="let row; columns: ['id','name','email','mobile','marks','status','classAssigned','actions'];"></tr>
-  </table>
+    <div class="bg-white rounded-xl shadow overflow-auto">
+      <table class="w-full">
+        <thead class="bg-gray-100 text-sm text-gray-600">
+          <tr>
+            <th class="p-3 text-left">Student Name</th>
+            <th class="p-3 text-left">Admission No</th>
+            <th class="p-3 text-left">Class/Program</th>
+            <th class="p-3 text-left">Status</th>
+            <th class="p-3 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let a of admissions" class="border-t">
+            <td class="p-3">{{ a.full_name }}</td>
+            <td class="p-3">{{ a.admission_no }}</td>
+            <td class="p-3">{{ a.school_class || a.college_program }}</td>
+            <td class="p-3">{{ a.status }}</td>
+            <td class="p-3 text-right">
+              <button (click)="view(a)" class="text-blue-600 mr-2">View</button>
+              <button (click)="edit(a)" class="text-yellow-600 mr-2">Edit</button>
+              <button (click)="approve(a)" class="text-green-600">Approve</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="admissions.length === 0" class="p-4 text-center text-sm text-gray-500">No admissions found.</div>
+    </div>
+  </div>
 </div>

@@ -1,0 +1,49 @@
+<div class="p-4 bg-gray-50 min-h-screen">
+  <div class="max-w-5xl mx-auto">
+    <h1 class="text-xl font-bold mb-4">Pending Admissions</h1>
+
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div
+        *ngFor="let a of pending"
+        class="bg-white p-4 rounded-xl shadow"
+      >
+        <div class="flex items-start gap-3">
+          <!-- Avatar with initials -->
+          <div
+            class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold"
+          >
+            {{ getInitials(a.full_name) }}
+          </div>
+
+          <!-- Admission Info -->
+          <div class="flex-1">
+            <div class="font-semibold">{{ a.full_name }}</div>
+            <div class="text-sm text-gray-600">
+              {{ a.school_class || a.college_program }}
+            </div>
+            <div class="text-sm text-gray-500 mt-2">
+              Docs:
+              <span class="font-medium">{{ (a.documents || []).length }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex gap-2 justify-end mt-4">
+          <button
+            (click)="approve(a.id)"
+            class="bg-green-600 text-white px-3 py-1 rounded"
+          >
+            Approve
+          </button>
+          <button
+            (click)="reject(a.id)"
+            class="bg-red-600 text-white px-3 py-1 rounded"
+          >
+            Reject
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

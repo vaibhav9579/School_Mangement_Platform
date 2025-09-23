@@ -1,0 +1,8 @@
+/* Tailwind classes are mostly used, so minimal CSS here */
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-datepicker-toggle {
+  cursor: pointer;
+}

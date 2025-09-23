@@ -22,6 +22,12 @@
         class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
         <i class="bi bi-people w-5 text-center"></i> Manage User
       </a>
+
+      <a (click)="navigateToSelDash('admission-approve')" routerLinkActive="bg-blue-700"
+        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+        <i class="bi bi-people w-5 text-center"></i> Admission Approval
+      </a>
+
       <!-- 
         <a (click)="navigateToSelDash('student')" routerLinkActive="bg-blue-700" class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
           <i class="bi bi-person-badge w-5 text-center"></i> Manage Students
@@ -49,17 +55,20 @@
           <i class="bi bi-card-heading w-5 text-center"></i> ID Card Generator
         </a> -->
 
+      <a (click)="navigateToSelDash('leave-policy')" routerLinkActive="bg-blue-700"
+        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+        <i class="bi bi-bell w-5 text-center"></i> Leave Policy
+      </a>
+
       <a (click)="navigateToSelDash('leave')" routerLinkActive="bg-blue-700"
         class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
         <i class="bi bi-bell w-5 text-center"></i> Leave Approval
       </a>
 
-
       <a (click)="navigateToSelDash('Allotleave')" routerLinkActive="bg-blue-700"
         class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
         <i class="bi bi-bell w-5 text-center"></i> Leave Allotment
       </a>
-
 
       <a (click)="navigateToSelDash('notification')" (click)="navigateToSelDash('notification')"
         routerLinkActive="bg-blue-700" class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">

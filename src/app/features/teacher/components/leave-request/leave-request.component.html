@@ -1,0 +1,77 @@
+<div class="p-4">
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-4">
+    <button class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition flex items-center gap-2"
+      (click)="openLeaveDialog('create')">
+      <mat-icon>add</mat-icon> Apply Leave
+    </button>
+  </div>
+
+  <!-- Leave Balance -->
+  <div class="bg-blue-100 p-4 rounded-lg mb-6">
+    <h3 class="font-semibold mb-2">Leave Balance</h3>
+    <ul class="list-disc pl-6">
+      <li *ngFor="let type of leaveBalance | keyvalue">
+        {{ type.key }}: <span class="font-bold">{{ type.value }}</span> days left
+      </li>
+    </ul>
+  </div>
+
+  <!-- Leave Requests Table -->
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-full bg-white">
+
+    <!-- SNo -->
+    <ng-container matColumnDef="sno">
+      <th mat-header-cell *matHeaderCellDef> Id </th>
+      <td mat-cell *matCellDef="let row; let i = index"> {{i+1}} </td>
+    </ng-container>
+
+    <!-- Leave Type -->
+    <ng-container matColumnDef="leave_type">
+      <th mat-header-cell *matHeaderCellDef> Leave Type </th>
+      <td mat-cell *matCellDef="let row"> {{row.leave_type}} </td>
+    </ng-container>
+
+    <!-- Start Date -->
+    <ng-container matColumnDef="start_date">
+      <th mat-header-cell *matHeaderCellDef> Start Date </th>
+      <td mat-cell *matCellDef="let row"> {{row.start_date | date}} </td>
+    </ng-container>
+
+    <!-- End Date -->
+    <ng-container matColumnDef="end_date">
+      <th mat-header-cell *matHeaderCellDef> End Date </th>
+      <td mat-cell *matCellDef="let row"> {{row.end_date | date}} </td>
+    </ng-container>
+
+    <!-- Status -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let row">
+        <span [ngClass]="{
+          'text-yellow-600 font-semibold': row.status === 'Pending',
+          'text-green-600 font-semibold': row.status === 'Approved',
+          'text-red-600 font-semibold': row.status === 'Rejected'
+        }">
+          {{ row.status }}
+        </span>
+      </td>
+    </ng-container>
+
+    <!-- Actions -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let row; let i = index">
+        <button mat-icon-button color="primary" (click)="openLeaveDialog('edit', i)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="openLeaveDialog('delete', i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

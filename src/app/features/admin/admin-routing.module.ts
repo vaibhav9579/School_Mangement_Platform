@@ -12,6 +12,8 @@ import { ClassCreationComponent } from './components/class-creation/class-creati
 import { ApproveLeaveComponent } from './components/approve-leave/approve-leave.component';
 import { LeaveAllotmentComponent } from './components/leave-allotment/leave-allotment.component';
 import { AddRoleComponent } from './components/add-role/add-role.component';
+import { LeavePolicyComponent } from './components/leave-policy/leave-policy.component';
+import { AdmissionApprovalComponent } from './components/admission-approval/admission-approval.component';
 
  const ADMIN_ROUTES: Routes = [
   {
@@ -31,6 +33,9 @@ import { AddRoleComponent } from './components/add-role/add-role.component';
       { path: 'leave', component: ApproveLeaveComponent },
       { path: 'Allotleave', component: LeaveAllotmentComponent },
       { path: 'addrole', component: AddRoleComponent },
+      { path: 'leave-policy', component: LeavePolicyComponent },
+      { path: 'admission-approve', component: AdmissionApprovalComponent },
+      
     ] 
   }
 ];

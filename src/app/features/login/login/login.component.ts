@@ -66,41 +66,45 @@ export class LoginComponent {
       this.authService.login(username, password).subscribe({
         next: (res) => {
           const _roleId = res.user.role;
-          console.log("role getting from login api", _roleId);
+          const _userId = res.user.id;
+          console.log("User ID from response:", _userId);
           this.roleService.getRoleById(_roleId).subscribe({
             next: (roleData) => {
-              console.log("role data from role api", roleData.name);
               // this.authService.setRoleName(roleData.name);
               switch (roleData.name) {
                 case 'Admin':
                   
                   this.authService.setSession(roleData.name);
                   this.authService.setName(res.user.username);
+                  this.authService.setUserId(_userId);
                   this.router.navigate(['/admin']);
                   break;
                 case 'Teacher':
                   
                   this.authService.setSession(roleData.name);
                   this.authService.setName(res.user.username);
+                  this.authService.setUserId(_userId);
                   this.router.navigate(['/teacher']);
                   break;
 
                 case 'Student':
                   this.authService.setSession(roleData.name);
                   this.authService.setName(res.user.username);
+                     this.authService.setUserId(_userId);
                   this.router.navigate(['/student']);
                   break;
 
                 case 'Clerk':
                   this.authService.setSession(roleData.name);
                   this.authService.setName(res.user.username);
+                     this.authService.setUserId(_userId);
                   this.router.navigate(['/clerk']);
                   break;
                 default:
                   this.router.navigate(['/login']);
                   break;
-
               }
+
               //
               // if (res.user.role === 'Admin') this.router.navigate(['/admin']);
               // else if (res.user.role === 'Teacher') this.router.navigate(['/teacher']);

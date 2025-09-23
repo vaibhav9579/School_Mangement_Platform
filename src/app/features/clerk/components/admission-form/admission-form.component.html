@@ -1,0 +1,114 @@
+<div class="min-h-screen p-4 bg-gray-50">
+  <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-md p-4">
+    <form [formGroup]="form">
+      <!-- Stepper header -->
+      <div class="flex gap-2 mb-4">
+        <div *ngFor="let s of [1,2,3,4,5]" class="flex-1 text-center py-2 rounded"
+          [ngClass]="s===step ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'">
+          Step {{s}}
+        </div>
+      </div>
+
+      <!-- Step 1 -->
+      <div *ngIf="step===1">
+        <h3 class="text-lg font-semibold mb-2">Student Details</h3>
+        <input class="border rounded p-2 w-full mb-2" formControlName="full_name" placeholder="Full Name" />
+
+        <div class="grid grid-cols-2 gap-2">
+          <input type="date" class="border rounded p-2" formControlName="dob" />
+          <select class="border rounded p-2" formControlName="gender">
+            <option value="">Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <input class="border rounded p-2 mt-2" formControlName="guardian_name" placeholder="Parent/Guardian" />
+        <input class="border rounded p-2 mt-2" formControlName="contact" placeholder="Contact" />
+        <textarea class="border rounded p-2 mt-2" formControlName="address" placeholder="Address"></textarea>
+
+        <label class="text-sm mt-2">Photo</label>
+        <input type="file" (change)="onFileChange($event,'photo')" class="block mt-1" />
+      </div>
+
+      <!-- Step 2 -->
+      <div *ngIf="step===2">
+        <h3 class="text-lg font-semibold mb-2">Academic Details</h3>
+        <select class="border rounded p-2 w-full mb-2" formControlName="institution_type">
+          <option>School</option>
+          <option>College</option>
+        </select>
+
+        <div *ngIf="form.get('institution_type')?.value === 'School'">
+          <input placeholder="Class" class="border rounded p-2 mb-2" formControlName="school_class" />
+          <input placeholder="Section" class="border rounded p-2 mb-2" formControlName="school_section" />
+        </div>
+
+        <div *ngIf="form.get('institution_type')?.value === 'College'">
+          <input placeholder="Department" class="border rounded p-2 mb-2" formControlName="college_department" />
+          <input placeholder="Program" class="border rounded p-2 mb-2" formControlName="college_program" />
+          <input placeholder="Year/Sem" class="border rounded p-2 mb-2" formControlName="college_year" />
+          <input placeholder="Section" class="border rounded p-2 mb-2" formControlName="college_section" />
+        </div>
+
+        <div class="mt-2">
+          Admission No (preview): <span class="font-medium">{{ form.get('admission_no')?.value }}</span>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div *ngIf="step===3">
+        <h3 class="text-lg font-semibold mb-2">Documents</h3>
+        <div class="space-y-2">
+          <label>ID Proof <input type="file" (change)="onFileChange($event,'idProof')" multiple /></label>
+          <label>Transfer Certificate <input type="file" (change)="onFileChange($event,'transferCertificate')"
+              multiple /></label>
+          <label>Marksheet <input type="file" (change)="onFileChange($event,'marksheet')" multiple /></label>
+          <label>Other <input type="file" (change)="onFileChange($event,'other')" multiple /></label>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div *ngIf="step===4">
+        <h3 class="text-lg font-semibold mb-2">Fee Assignment</h3>
+        <div *ngFor="let f of feeBreakdown" class="flex justify-between border-b p-2">
+          <div>{{ f.item }}</div>
+          <div>₹{{ f.amount }}</div>
+        </div>
+        <div class="mt-2">
+          <label class="flex items-center gap-2">
+            <input type="checkbox" formControlName="initial_payment_received" />
+            <label class="ml-2">Initial payment received</label>
+
+            Initial payment received
+          </label>
+          <input type="number" placeholder="Amount" class="border rounded p-2 mt-2"
+            formControlName="initial_payment_amount" />
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div *ngIf="step===5">
+        <h3 class="text-lg font-semibold mb-2">Review & Submit</h3>
+        <pre class="bg-gray-100 p-3 rounded">{{ form.value | json }}</pre>
+        <div class="flex gap-2 mt-3 justify-end">
+          <button type="button" (click)="saveDraft()" class="bg-gray-200 px-4 py-2 rounded">Save as Draft</button>
+          <button type="button" (click)="submitForApproval()" class="bg-blue-600 text-white px-4 py-2 rounded">
+            Submit for Approval
+          </button>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="flex justify-between mt-4">
+        <button type="button" (click)="prev()" class="bg-gray-200 px-4 py-2 rounded"
+          [disabled]="step===1">Previous</button>
+        <button *ngIf="step < maxStep" type="button" (click)="next()"
+          class="bg-blue-600 text-white px-4 py-2 rounded">Next</button>
+        <button *ngIf="step === maxStep" type="button" (click)="submitForApproval()"
+          class="bg-blue-600 text-white px-4 py-2 rounded">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>

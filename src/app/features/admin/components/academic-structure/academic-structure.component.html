@@ -1,0 +1,143 @@
+<!-- admin-academic.component.html -->
+<div class="p-4 max-w-6xl mx-auto">
+  <h2 class="text-2xl font-semibold mb-4">Academic Structure (Admin)</h2>
+
+  <!-- Tabs -->
+  <div class="flex gap-2 mb-4 flex-wrap">
+    <button (click)="selectTab('institution')" [class.bg-blue-600]="tab==='institution'" class="px-3 py-2 rounded-lg border">Institutions</button>
+    <button (click)="selectTab('department')" [class.bg-blue-600]="tab==='department'" class="px-3 py-2 rounded-lg border">Departments</button>
+    <button (click)="selectTab('program')" [class.bg-blue-600]="tab==='program'" class="px-3 py-2 rounded-lg border">Programs</button>
+    <button (click)="selectTab('class')" [class.bg-blue-600]="tab==='class'" class="px-3 py-2 rounded-lg border">Classes</button>
+    <button (click)="selectTab('section')" [class.bg-blue-600]="tab==='section'" class="px-3 py-2 rounded-lg border">Sections</button>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- LEFT: Form -->
+    <div class="bg-white p-4 rounded-xl shadow">
+      <!-- Institution Form -->
+      <div *ngIf="tab==='institution'">
+        <h3 class="font-medium mb-2">Add / Edit Institution</h3>
+        <form [formGroup]="instForm" (ngSubmit)="saveInstitution()" class="space-y-2">
+          <input formControlName="name" placeholder="Institution name" class="w-full border rounded p-2" />
+          <select formControlName="type" class="w-full border rounded p-2">
+            <option value="school">School</option><option value="college">College</option>
+          </select>
+          <div class="flex gap-2 justify-end">
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Save</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Department form -->
+      <div *ngIf="tab==='department'">
+        <h3 class="font-medium mb-2">Department (College)</h3>
+        <form [formGroup]="deptForm" (ngSubmit)="saveDepartment()" class="space-y-2">
+          <select formControlName="institution_id" class="w-full border rounded p-2">
+            <option [ngValue]="null">Select Institution (college)</option>
+            <option *ngFor="let i of institutions" [value]="i.id" *ngIf="i.type==='college'">{{ i.name }}</option>
+          </select>
+          <input formControlName="name" placeholder="Department name" class="w-full border rounded p-2" />
+          <div class="flex justify-end"><button class="bg-blue-600 text-white px-4 py-2 rounded">Save</button></div>
+        </form>
+      </div>
+
+      <!-- Program form -->
+      <div *ngIf="tab==='program'">
+        <h3 class="font-medium mb-2">Program (College)</h3>
+        <form [formGroup]="progForm" (ngSubmit)="saveProgram()" class="space-y-2">
+          <select formControlName="department_id" class="w-full border rounded p-2">
+            <option value="">Select Department</option>
+            <option *ngFor="let d of departments" [value]="d.id">{{ d.name }}</option>
+          </select>
+          <input formControlName="name" placeholder="Program name" class="w-full border rounded p-2" />
+          <div class="flex justify-end"><button class="bg-blue-600 text-white px-4 py-2 rounded">Save</button></div>
+        </form>
+      </div>
+
+      <!-- Class form -->
+      <div *ngIf="tab==='class'">
+        <h3 class="font-medium mb-2">Class</h3>
+        <form [formGroup]="classForm" (ngSubmit)="saveClass()" class="space-y-2">
+          <select formControlName="institution_id" class="w-full border rounded p-2">
+            <option value="">Select Institution</option>
+            <option *ngFor="let i of institutions" [value]="i.id">{{ i.name }} ({{i.type}})</option>
+          </select>
+          <select formControlName="program_id" class="w-full border rounded p-2">
+            <option value="">Program (optional)</option>
+            <option *ngFor="let p of programs" [value]="p.id">{{ p.name }}</option>
+          </select>
+          <input formControlName="name" placeholder="Class name (e.g. Class 8)" class="w-full border rounded p-2" />
+          <div class="flex justify-end"><button class="bg-blue-600 text-white px-4 py-2 rounded">Save</button></div>
+        </form>
+      </div>
+
+      <!-- Section form -->
+      <div *ngIf="tab==='section'">
+        <h3 class="font-medium mb-2">Section</h3>
+        <form [formGroup]="sectionForm" (ngSubmit)="saveSection()" class="space-y-2">
+          <select formControlName="class_id" class="w-full border rounded p-2">
+            <option value="">Select Class</option>
+            <option *ngFor="let c of classes" [value]="c.id">{{ c.name }}</option>
+          </select>
+          <input formControlName="name" placeholder="Section name (e.g. A)" class="w-full border rounded p-2" />
+          <div class="flex justify-end"><button class="bg-blue-600 text-white px-4 py-2 rounded">Save</button></div>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: lists -->
+    <div class="space-y-4">
+      <!-- Institutions list -->
+      <div class="bg-white p-4 rounded-xl shadow">
+        <h3 class="font-medium mb-3">Institutions</h3>
+        <div *ngFor="let i of institutions" class="flex justify-between items-center border-b py-2">
+          <div>
+            <div class="font-semibold">{{ i.name }}</div>
+            <div class="text-sm text-gray-500">{{ i.type }}</div>
+          </div>
+          <div class="flex gap-2">
+            <button (click)="editInstitution(i)" class="text-blue-600">Edit</button>
+            <button (click)="deleteInstitution(i.id!)" class="text-red-600">Delete</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Departments / Programs / Classes / Sections lists follow similarly -->
+      <div *ngIf="tab==='department'" class="bg-white p-4 rounded-xl shadow">
+        <h3 class="font-medium mb-3">Departments</h3>
+        <div *ngFor="let d of departments" class="flex justify-between items-center border-b py-2">
+          <div>{{ d.name }}</div>
+          <div class="flex gap-2"><button (click)="editDepartment(d)" class="text-blue-600">Edit</button><button (click)="deleteDepartment(d.id!)" class="text-red-600">Delete</button></div>
+        </div>
+      </div>
+
+      <div *ngIf="tab==='program'" class="bg-white p-4 rounded-xl shadow">
+        <h3 class="font-medium mb-3">Programs</h3>
+        <div *ngFor="let p of programs" class="flex justify-between items-center border-b py-2">
+          <div>{{ p.name }}</div>
+          <div class="flex gap-2"><button (click)="editProgram(p)" class="text-blue-600">Edit</button><button (click)="deleteProgram(p.id!)" class="text-red-600">Delete</button></div>
+        </div>
+      </div>
+
+      <div *ngIf="tab==='class'" class="bg-white p-4 rounded-xl shadow">
+        <h3 class="font-medium mb-3">Classes</h3>
+        <div *ngFor="let c of classes" class="flex justify-between items-center border-b py-2">
+          <div>{{ c.name }}</div>
+          <div class="flex gap-2"><button (click)="editClass(c)" class="text-blue-600">Edit</button><button (click)="deleteClass(c.id!)" class="text-red-600">Delete</button></div>
+        </div>
+      </div>
+
+      <div *ngIf="tab==='section'" class="bg-white p-4 rounded-xl shadow">
+        <h3 class="font-medium mb-3">Sections</h3>
+        <div *ngFor="let s of sections" class="flex justify-between items-center border-b py-2">
+          <div>{{ s.name }}</div>
+          <div class="flex gap-2"><button (click)="editSection(s)" class="text-blue-600">Edit</button><button (click)="deleteSection(s.id!)" class="text-red-600">Delete</button></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div *ngIf="message" class="mt-4 text-green-600">{{ message }}</div>
+</div>

@@ -42,6 +42,7 @@ export class AdminLayoutComponent implements OnInit {
     else if (url.includes('id')) this.pageTitle = 'ID Card Generator';
     else if (url.includes('user')) this.pageTitle = 'Manage User';
     else if (url.includes('class')) this.pageTitle = 'Manage Classes';
+    else if (url.includes('leave-policy')) this.pageTitle = 'Leave Policy';
     // else if (url.includes('notification')) this.pageTitle = 'Notifications';
     else this.pageTitle = '';
 
@@ -140,6 +141,14 @@ export class AdminLayoutComponent implements OnInit {
 
       case "notification":
         this.router.navigate(['admin/notification']);
+        break;
+
+      case "leave-policy":
+        this.router.navigate(['admin/leave-policy']);
+        break;
+
+      case "admission-approve":
+        this.router.navigate(['admin/admission-approve']);
         break;
     }
   }

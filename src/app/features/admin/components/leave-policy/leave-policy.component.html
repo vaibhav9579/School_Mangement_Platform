@@ -1,0 +1,56 @@
+<div class="p-4">
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-4">
+    <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition flex items-center gap-2"
+      (click)="openPolicyDialog('create')">
+      <i class="fas fa-plus"></i> + Add Policy
+    </button>
+  </div>
+
+  <!-- Policies Table -->
+  <div class="bg-white">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-full bg-white">
+
+      <!-- Policy ID -->
+      <ng-container matColumnDef="policy_id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let policy"> {{policy.policy_id}} </td>
+      </ng-container> 
+
+      <!-- Role -->
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef> Role </th>
+        <td mat-cell *matCellDef="let policy"> {{ policy.role_name }} </td>
+      </ng-container>
+
+      <!-- Leave Type -->
+      <ng-container matColumnDef="leave_type">
+        <th mat-header-cell *matHeaderCellDef> Leave Type </th>
+        <td mat-cell *matCellDef="let policy"> {{policy.leave_type}} </td>
+      </ng-container>
+
+      <!-- Allowed Days -->
+      <ng-container matColumnDef="allowed_days">
+        <th mat-header-cell *matHeaderCellDef> Allowed Days </th>
+        <td mat-cell *matCellDef="let policy"> {{policy.allowed_days}} </td>
+      </ng-container>
+
+      <!-- Actions -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let policy; let i = index">
+          <button mat-icon-button color="primary" (click)="openPolicyDialog('edit', i)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="openPolicyDialog('delete', i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Render Rows -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</div>

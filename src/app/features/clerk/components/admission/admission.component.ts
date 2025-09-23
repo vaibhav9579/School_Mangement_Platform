@@ -1,112 +1,60 @@
+// admission-dashboard.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatTableModule } from '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { Student } from '../../../../shared/models/student';
-import { StudentServiceService } from '../../../../shared/services/student-service.service';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
+import { Admission, AdmissionService } from '../../../../shared/services/admission.service';
+import { RouterModule, Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-admission',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatButtonModule, MatIconModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, MatSelectModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './admission.component.html',
-  styleUrls: ['./admission.component.css']
-})
-
+  styleUrls: ['./admission.component.css']})
 export class AdmissionComponent implements OnInit {
-  displayedColumns: string[] = ['sno', 'name', 'email', 'class', 'status', 'actions'];
-  students: Student[] = [];
-  dataSource: Student[] = [];
-  studentForm!: FormGroup;
-  isEditMode: boolean = false;
-  selectedStudentId?: number;
+  admissions: Admission[] = [];
+  stats = { pending: 0, approved: 0, rejected: 0, drafts: 0 };
+  filter = { department: '', klass: '', section: '' };
 
   constructor(
-    private studentService: StudentServiceService,
-    private fb: FormBuilder
-  ) {}
+     private svc: AdmissionService,
+     private router: Router) {}
 
-  ngOnInit(): void {
-    this.loadStudents();
+  ngOnInit(): void { this.load(); }
 
-    // initialize form
-    this.studentForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      mobile: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
-      marks: [0, Validators.required],
-      documents: [[]], 
-      status: ['pending', Validators.required],
-      classAssigned: ['']
-    })
-  }
-
-  loadStudents(): void {
-    this.studentService.getStudents().subscribe((data) => {
-      this.students = data;
-      this.dataSource = data;
+  load() {
+    // optionally pass filters
+    this.svc.getAdmissions().subscribe({
+      next: (list) => {
+        this.admissions = list;
+        this.recalc();
+      },
+      error: (err) => console.error(err)
     });
   }
 
-  approveAdmission(student: Student): void {
-    if (!student.id) return;
-    const updatedStudent : Student = { ...student, status: 'approved' };
-    this.studentService.updateStudent(student.id, updatedStudent).subscribe(() => {
-      this.loadStudents();
-    });
+  recalc() {
+    this.stats.pending = this.admissions.filter(a => a.status === 'pending').length;
+    this.stats.approved = this.admissions.filter(a => a.status === 'approved').length;
+    this.stats.rejected = this.admissions.filter(a => a.status === 'rejected').length;
+    this.stats.drafts = this.admissions.filter(a => a.status === 'draft').length;
   }
 
-  rejectAdmission(student: Student): void {
-    if (!student.id) return;
-    const updatedStudent : Student = { ...student, status: 'rejected' };
-    this.studentService.updateStudent(student.id, updatedStudent).subscribe(() => {
-      this.loadStudents();
-    });
+  newAdmission() {
+    this.router.navigate(['clerk/new-admission']);
   }
 
-    onSubmit() {
-    if (this.studentForm.invalid) return;
-
-    const studentData: Student = this.studentForm.value;
-
-    if (this.isEditMode && this.selectedStudentId) {
-      // update student
-      this.studentService.updateStudent(this.selectedStudentId, studentData).subscribe(() => {
-        this.loadStudents();
-        this.resetForm();
-      });
-    } else {
-      // add new student
-      this.studentService.addStudent(studentData).subscribe(() => {
-        this.loadStudents();
-        this.resetForm();
-      });
-    }
+  view(a: Admission) {
+    this.router.navigate(['clerk/admission', a.id]);
   }
 
-  editStudent(student: Student) {
-    this.isEditMode = true;
-    this.selectedStudentId = student.id;
-    this.studentForm.patchValue(student);
+  edit(a: Admission) {
+    this.router.navigate(['clerk/confirm-admission', a.id]);
   }
 
-  deleteStudent(id: number) {
-    this.studentService.deleteStudent(id).subscribe(() => {
-      this.loadStudents();
-    });
-  }
-
-  resetForm() {
-    this.studentForm.reset({
-      status: 'pending',
-      marks: 0,
-      documents: []
-    });
-    this.isEditMode = false;
-    this.selectedStudentId = undefined;
+  approve(a: Admission) {
+    if (!a.id) return;
+    this.svc.approveAdmission(a.id).subscribe(() => this.load());
   }
 }
+
