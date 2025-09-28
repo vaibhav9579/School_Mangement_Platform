@@ -147,6 +147,10 @@ export class AdminLayoutComponent implements OnInit {
         this.router.navigate(['admin/leave-policy']);
         break;
 
+      case "academic-structure":
+        this.router.navigate(['admin/academic-structure']);
+        break;
+
       case "admission-approve":
         this.router.navigate(['admin/admission-approve']);
         break;

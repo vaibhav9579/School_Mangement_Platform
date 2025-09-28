@@ -4,11 +4,16 @@
 
   <!-- Tabs -->
   <div class="flex gap-2 mb-4 flex-wrap">
-    <button (click)="selectTab('institution')" [class.bg-blue-600]="tab==='institution'" class="px-3 py-2 rounded-lg border">Institutions</button>
-    <button (click)="selectTab('department')" [class.bg-blue-600]="tab==='department'" class="px-3 py-2 rounded-lg border">Departments</button>
-    <button (click)="selectTab('program')" [class.bg-blue-600]="tab==='program'" class="px-3 py-2 rounded-lg border">Programs</button>
-    <button (click)="selectTab('class')" [class.bg-blue-600]="tab==='class'" class="px-3 py-2 rounded-lg border">Classes</button>
-    <button (click)="selectTab('section')" [class.bg-blue-600]="tab==='section'" class="px-3 py-2 rounded-lg border">Sections</button>
+    <button (click)="selectTab('institution')" [class.bg-blue-600]="tab==='institution'"
+      class="px-3 py-2 rounded-lg border">Institutions</button>
+    <button (click)="selectTab('department')" [class.bg-blue-600]="tab==='department'"
+      class="px-3 py-2 rounded-lg border">Departments</button>
+    <button (click)="selectTab('program')" [class.bg-blue-600]="tab==='program'"
+      class="px-3 py-2 rounded-lg border">Programs</button>
+    <button (click)="selectTab('class')" [class.bg-blue-600]="tab==='class'"
+      class="px-3 py-2 rounded-lg border">Classes</button>
+    <button (click)="selectTab('section')" [class.bg-blue-600]="tab==='section'"
+      class="px-3 py-2 rounded-lg border">Sections</button>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -20,7 +25,8 @@
         <form [formGroup]="instForm" (ngSubmit)="saveInstitution()" class="space-y-2">
           <input formControlName="name" placeholder="Institution name" class="w-full border rounded p-2" />
           <select formControlName="type" class="w-full border rounded p-2">
-            <option value="school">School</option><option value="college">College</option>
+            <option value="school">School</option>
+            <option value="college">College</option>
           </select>
           <div class="flex gap-2 justify-end">
             <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Save</button>
@@ -34,8 +40,11 @@
         <form [formGroup]="deptForm" (ngSubmit)="saveDepartment()" class="space-y-2">
           <select formControlName="institution_id" class="w-full border rounded p-2">
             <option [ngValue]="null">Select Institution (college)</option>
-            <option *ngFor="let i of institutions" [value]="i.id" *ngIf="i.type==='college'">{{ i.name }}</option>
+            <ng-container *ngFor="let i of institutions">
+              <option *ngIf="i.type==='college'" [value]="i.id">{{ i.name }}</option>
+            </ng-container>
           </select>
+
           <input formControlName="name" placeholder="Department name" class="w-full border rounded p-2" />
           <div class="flex justify-end"><button class="bg-blue-600 text-white px-4 py-2 rounded">Save</button></div>
         </form>
@@ -108,7 +117,8 @@
         <h3 class="font-medium mb-3">Departments</h3>
         <div *ngFor="let d of departments" class="flex justify-between items-center border-b py-2">
           <div>{{ d.name }}</div>
-          <div class="flex gap-2"><button (click)="editDepartment(d)" class="text-blue-600">Edit</button><button (click)="deleteDepartment(d.id!)" class="text-red-600">Delete</button></div>
+          <div class="flex gap-2"><button (click)="editDepartment(d)" class="text-blue-600">Edit</button><button
+              (click)="deleteDepartment(d.id!)" class="text-red-600">Delete</button></div>
         </div>
       </div>
 
@@ -116,7 +126,8 @@
         <h3 class="font-medium mb-3">Programs</h3>
         <div *ngFor="let p of programs" class="flex justify-between items-center border-b py-2">
           <div>{{ p.name }}</div>
-          <div class="flex gap-2"><button (click)="editProgram(p)" class="text-blue-600">Edit</button><button (click)="deleteProgram(p.id!)" class="text-red-600">Delete</button></div>
+          <div class="flex gap-2"><button (click)="editProgram(p)" class="text-blue-600">Edit</button><button
+              (click)="deleteProgram(p.id!)" class="text-red-600">Delete</button></div>
         </div>
       </div>
 
@@ -124,7 +135,8 @@
         <h3 class="font-medium mb-3">Classes</h3>
         <div *ngFor="let c of classes" class="flex justify-between items-center border-b py-2">
           <div>{{ c.name }}</div>
-          <div class="flex gap-2"><button (click)="editClass(c)" class="text-blue-600">Edit</button><button (click)="deleteClass(c.id!)" class="text-red-600">Delete</button></div>
+          <div class="flex gap-2"><button (click)="editClass(c)" class="text-blue-600">Edit</button><button
+              (click)="deleteClass(c.id!)" class="text-red-600">Delete</button></div>
         </div>
       </div>
 
@@ -132,7 +144,8 @@
         <h3 class="font-medium mb-3">Sections</h3>
         <div *ngFor="let s of sections" class="flex justify-between items-center border-b py-2">
           <div>{{ s.name }}</div>
-          <div class="flex gap-2"><button (click)="editSection(s)" class="text-blue-600">Edit</button><button (click)="deleteSection(s.id!)" class="text-red-600">Delete</button></div>
+          <div class="flex gap-2"><button (click)="editSection(s)" class="text-blue-600">Edit</button><button
+              (click)="deleteSection(s.id!)" class="text-red-600">Delete</button></div>
         </div>
       </div>
 

@@ -14,6 +14,7 @@ import { LeaveAllotmentComponent } from './components/leave-allotment/leave-allo
 import { AddRoleComponent } from './components/add-role/add-role.component';
 import { LeavePolicyComponent } from './components/leave-policy/leave-policy.component';
 import { AdmissionApprovalComponent } from './components/admission-approval/admission-approval.component';
+import { AcademicStructureComponent } from './components/academic-structure/academic-structure.component';
 
  const ADMIN_ROUTES: Routes = [
   {
@@ -35,6 +36,7 @@ import { AdmissionApprovalComponent } from './components/admission-approval/admi
       { path: 'addrole', component: AddRoleComponent },
       { path: 'leave-policy', component: LeavePolicyComponent },
       { path: 'admission-approve', component: AdmissionApprovalComponent },
+      {path : 'academic-structure', component: AcademicStructureComponent}
       
     ] 
   }

@@ -36,7 +36,7 @@ export class ClassCreationComponent implements OnInit {
   displayedColumns: string[] = ['sno', 'classTeacher', 'className', 'actions'];
   dataSource: Class[] = [];
   private _allTeachersData: User[] = [];
-  private _role : string= "Teacher";
+  private _role : number= 12;
 
   constructor(
     private dialog: MatDialog,
@@ -55,7 +55,9 @@ export class ClassCreationComponent implements OnInit {
   loadUsers(): void {
     this.userService.getUsers().subscribe({
       next: (users) => {
-        this._allTeachersData = users.filter(user => user.name === `${this._role}`);
+        console.log("user", users);
+        this._allTeachersData = users.filter((user: User) => user.role === this._role);
+        console.log("teacher data", this._allTeachersData);
       },
       error: (err) => console.error('Error loading users:', err)
     });

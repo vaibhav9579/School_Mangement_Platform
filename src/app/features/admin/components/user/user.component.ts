@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { User } from '../../models/user';
 import { UserService } from '../../../../shared/services/user.service';
 import { ManageUserDialogComponent } from '../../dialogs/manage-user-dialog/manage-user-dialog.component';
+import { RoleServiceService } from '../../../../shared/services/role-service.service';
 
 @Component({
   selector: 'app-user',
@@ -26,14 +27,17 @@ import { ManageUserDialogComponent } from '../../dialogs/manage-user-dialog/mana
 export class UserComponent implements OnInit {
   displayedColumns: string[] = ['sno', 'name', 'email', 'role', 'actions'];
   dataSource: User[] = [];
+  rolesMap: { [key: number]: string } = {};
 
   constructor(
     private dialog: MatDialog,
-    private userService: UserService
-  ) {}
+    private userService: UserService,
+    private _RoleServiceService: RoleServiceService
+  ) { }
 
   ngOnInit(): void {
     this.loadUsers();
+    const data = this.loadRoles();
   }
 
   /**
@@ -41,10 +45,31 @@ export class UserComponent implements OnInit {
    */
   loadUsers(): void {
     this.userService.getUsers().subscribe({
-      next: (users) => this.dataSource = users,
+      next: (users) => {
+        this.dataSource = users
+        console.log("users", users);
+      },
       error: (err) => console.error('Error loading users:', err)
     });
   }
+
+  loadRoles(): void {
+    this._RoleServiceService.getRoles().subscribe({
+      next: (rolesdata) => {
+        this.rolesMap = rolesdata.reduce((acc: any, role: any) => {
+          acc[role.id] = role.name;
+          return acc;
+        }, {});
+        console.log("rolesMap", this.rolesMap);
+      },
+      error: (err) => console.error("Error loading roles:", err)
+    });
+  }
+
+  getRoleNameById(roleId: number): string {
+    return this.rolesMap[roleId] || 'Unknown';
+  }
+
 
   /**
    * @description: Perform action On users

@@ -1,5 +1,5 @@
 import { Component, OnInit , Inject} from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { Roles } from '../../models/roles';
@@ -7,12 +7,13 @@ import { RoleServiceService } from '../../../../shared/services/role-service.ser
 
 @Component({
   selector: 'app-manageroledialog',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './manageroledialog.component.html',
   styleUrls: ['./manageroledialog.component.css']
 })
 export class ManageroledialogComponent implements OnInit {
 roleForm: FormGroup;
+public roleName: string = "";
 
   // roles: string[] = ['Admin', 'Teacher', 'Clerk', 'Student', 'Principal', 'Vice Principal', 'Accountant', 'Librarian', 'Counselor', 'Transport Manager', 'Hostel Manager', 'Lab Assistant', 'Sports Coach', 'Nurse', 'Receptionist', 'Security', 'Cleaner', 'Gardener' ,'SchoolBus-Driver', 'SchoolBus-Conductor', 'Cafeteria-Staff', 'IT-Support', 'Event-Coordinator', 'Volunteer', 'Parent', 'Alumni'];
 
@@ -45,7 +46,9 @@ roleForm: FormGroup;
 
   onSubmit() {
     if (this.action === 'delete') {
+      if(this.roleName === this.data.role?.name){
       this.dialogRef.close(true);
+      }
     } else if (this.roleForm.valid) {
       this.dialogRef.close(this.roleForm.value);
     }

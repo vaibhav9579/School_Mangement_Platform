@@ -10,16 +10,17 @@ import { Class } from '../../models/class';
 @Component({
   selector: 'app-manage-class-dialog',
   standalone: true,
-  imports: [FormsModule,ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './manage-class-dialog.component.html',
   styleUrl: './manage-class-dialog.component.css'
 })
 
 export class ManageClassDialogComponent implements OnInit {
-classForm: FormGroup;
+  classForm: FormGroup;
   action: 'create' | 'edit' | 'delete';
   roles: string[] = ['Admin', 'Teacher', 'Clerk', 'Student'];
-  public teacherData : User[] = [];
+  public teacherData: User[] = [];
+  public _className: string = "";
 
   constructor(
     private fb: FormBuilder,
@@ -48,7 +49,7 @@ classForm: FormGroup;
     // assigning teacher data to local variable
     this.teacherData = this.data.teacherData;
   }
-  
+
   /** Reset form fields */
   onReset() {
     this.classForm.reset();
@@ -57,14 +58,16 @@ classForm: FormGroup;
   /** Submit form */
   onSubmit() {
     if (this.action === 'delete') {
-      this.dialogRef.close(true); // send "true" to confirm delete
+      if (this._className === this.data.class?.classname) {
+        this.dialogRef.close(true); // send "true" to confirm delet
+      }
     } else if (this.classForm.valid) {
-      const { classname, classteacher} = this.classForm.value;
+      const { classname, classteacher } = this.classForm.value;
 
       console.log('form values', this.classForm.value);
       // Map form values back to Class structure
       const result: Partial<Class> = {
-        classname ,
+        classname,
         classteacher
       };
 

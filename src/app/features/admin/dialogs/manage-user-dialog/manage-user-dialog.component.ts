@@ -1,4 +1,4 @@
-import { CommonModule, } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -18,8 +18,10 @@ import { RoleServiceService } from '../../../../shared/services/role-service.ser
 export class ManageUserDialogComponent implements OnInit {
   userForm: FormGroup;
   action: 'create' | 'edit' | 'delete';
-  // roles: string[] = ['Admin', 'Teacher', 'Clerk', 'Student'];
   public roles: Roles[] = [];
+
+  // For delete confirmation
+  deleteConfirmInput: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -66,7 +68,9 @@ export class ManageUserDialogComponent implements OnInit {
   /** Submit form */
   onSubmit() {
     if (this.action === 'delete') {
-      this.dialogRef.close(true); // send "true" to confirm delete
+      if (this.deleteConfirmInput === this.data.user?.name) {
+        this.dialogRef.close(true); // only confirm delete if names match
+      }
     } else if (this.userForm.valid) {
       const { fullName, email, role, password } = this.userForm.value;
 
