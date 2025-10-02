@@ -1,0 +1,95 @@
+<div class="p-6 space-y-6">
+    <div class="border rounded-lg p-4 shadow bg-white">
+        <h2 class="text-xl font-bold mb-4">Assign Class-Teacher</h2>
+
+        <!-- FORM -->
+        <form [formGroup]="form" (ngSubmit)="save()" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+
+            <!-- Institution -->
+            <div>
+                <label class="block text-sm mb-1">Institution</label>
+                <select formControlName="institution_id" (change)="onInstitutionChange($event)"
+                    class="w-full border rounded p-2">
+                    <option [ngValue]="null">Select Institution</option>
+                    <option *ngFor="let i of institutions" [value]="i.id">
+                        {{ i.name }} ({{ i.type }})
+                    </option>
+                </select>
+            </div>
+
+            <!-- Department -->
+            <div>
+                <label class="block text-sm mb-1">Department (if College)</label>
+                <select formControlName="department_id" (change)="onDepartmentChange($event)"
+                    class="w-full border rounded p-2">
+                    <option [ngValue]="null">Select Department</option>
+                    <option *ngFor="let d of departments" [value]="d.id">{{ d.name }}</option>
+                </select>
+            </div>
+
+            <!-- Program -->
+            <div>
+                <label class="block text-sm mb-1">Program</label>
+                <select formControlName="program_id" (change)="onProgramChange($event)"
+                    class="w-full border rounded p-2">
+                    <option [ngValue]="null">Select Program</option>
+                    <option *ngFor="let p of programs" [value]="p.id">{{ p.name }}</option>
+                </select>
+            </div>
+
+            <!-- Class -->
+            <div>
+                <label class="block text-sm mb-1">Class</label>
+                <select formControlName="class_id" class="w-full border rounded p-2">
+                    <option [ngValue]="null">Select Class</option>
+                    <option *ngFor="let c of classes" [value]="c.id">{{ c.name }}</option>
+                </select>
+            </div>
+
+            <!-- class teacher name -->
+            <div>
+                <label class="block text-sm mb-1">Class Teacher</label>
+                <select formControlName="classteacher" class="w-full border rounded p-2">
+                    <option [ngValue]="null">Select Class-Teacher</option>
+                    <option *ngFor="let teacher of _allTeachersData" [value]="teacher.id">{{ teacher.name }}</option>
+                </select>
+            </div>
+
+            <!-- Subject Name -->
+            <!-- <div>
+                <label class="block text-sm mb-1">Select Class Teacher</label>
+                <input formControlName="classteacher" placeholder="Subject Name" class="w-full border p-2 rounded" />
+            </div> -->
+
+            <!-- Subject Code -->
+            <!-- <div>
+        <label class="block text-sm mb-1">Subject Code</label>
+        <input formControlName="code" placeholder="Code" class="w-full border p-2 rounded" />
+      </div> -->
+
+            <!-- Submit -->
+            <div class="col-span-full flex justify-end gap-2">
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded shadow">
+                    {{ form.value.class_id ? 'Update Subject' : 'Save Subject' }}
+                </button>
+                <button type="button" (click)="form.reset()" class="bg-gray-400 text-white px-4 py-2 rounded shadow">
+                    Reset
+                </button>
+            </div>
+        </form>
+
+        <!-- LIST -->
+        <!-- <div>
+      <h3 class="font-semibold mb-2">Subjects List</h3>
+      <ul>
+        <li *ngFor="let s of subjects" class="flex justify-between items-center border-b py-2">
+          <span>{{ s.name }} ({{ s.code }})</span>
+          <div class="flex gap-2">
+            <button class="text-sm text-blue-600" (click)="edit(s)">Edit</button>
+            <button class="text-sm text-red-600" (click)="delete(s.id!)">Delete</button>
+          </div>
+        </li>
+      </ul>
+    </div> -->
+    </div>
+</div>

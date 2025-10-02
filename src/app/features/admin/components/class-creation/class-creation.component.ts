@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatListModule } from '@angular/material/list';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { User } from '../../models/user';
@@ -18,11 +18,11 @@ import { ClassesServiceService } from '../../../../shared/services/classes-servi
   selector: 'app-class-creation',
   standalone: true,
   imports: [
-    CommonModule, 
-    ReactiveFormsModule, 
-    FormsModule, 
-    MatFormFieldModule, 
-    MatListModule, 
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatListModule,
     MatSelectModule,
     MatIconModule,
     MatTableModule,
@@ -35,14 +35,16 @@ import { ClassesServiceService } from '../../../../shared/services/classes-servi
 export class ClassCreationComponent implements OnInit {
   displayedColumns: string[] = ['sno', 'classTeacher', 'className', 'actions'];
   dataSource: Class[] = [];
+  rolesMap: { [key: number]: string } = {};
+
   private _allTeachersData: User[] = [];
-  private _role : number= 12;
+  private _role: number = 12;
 
   constructor(
     private dialog: MatDialog,
     private userService: UserService,
     private classService: ClassesServiceService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadUsers();
@@ -57,7 +59,12 @@ export class ClassCreationComponent implements OnInit {
       next: (users) => {
         console.log("user", users);
         this._allTeachersData = users.filter((user: User) => user.role === this._role);
-        console.log("teacher data", this._allTeachersData);
+        console.log("_allteacherData", this._allTeachersData);
+        this.rolesMap = this._allTeachersData.reduce((acc: any, role: any) => {
+          acc[role.id] = role.name;
+          return acc;
+        }, {});
+        console.log("this.role", this.rolesMap);
       },
       error: (err) => console.error('Error loading users:', err)
     });
@@ -74,6 +81,23 @@ export class ClassCreationComponent implements OnInit {
     });
   }
 
+  // loadRoles(): void {
+  //   this._RoleServiceService.getRoles().subscribe({
+  //     next: (rolesdata) => {
+  //       this.rolesMap = rolesdata.reduce((acc: any, role: any) => {
+  //         acc[role.id] = role.name;
+  //         return acc;
+  //       }, {});
+  //       console.log("rolesMap", this.rolesMap);
+  //     },
+  //     error: (err) => console.error("Error loading roles:", err)
+  //   });
+  // }
+
+  getRoleNameById(roleId: number): string {
+    return this.rolesMap[roleId] || 'Unknown';
+  }
+
   /**
    * @description: Perform action On users
    * @param action 
@@ -86,7 +110,7 @@ export class ClassCreationComponent implements OnInit {
       case 'create':
         this.dialog.open(ManageClassDialogComponent, {
           width: '400px',
-          data: {action : 'add', teacherData: this._allTeachersData}
+          data: { action: 'add', teacherData: this._allTeachersData }
         }).afterClosed().subscribe(result => {
           if (result) {
             this.classService.addClass(result).subscribe({
@@ -100,7 +124,7 @@ export class ClassCreationComponent implements OnInit {
       case 'edit':
         this.dialog.open(ManageClassDialogComponent, {
           width: '400px',
-          data: { action: 'edit', class: selectedClass,  teacherData: this._allTeachersData }
+          data: { action: 'edit', class: selectedClass, teacherData: this._allTeachersData }
         }).afterClosed().subscribe(result => {
           if (result && selectedClass && selectedClass.id !== undefined) {
             this.classService.updateClass(selectedClass.id, result).subscribe({
@@ -114,7 +138,7 @@ export class ClassCreationComponent implements OnInit {
       case 'delete':
         this.dialog.open(ManageClassDialogComponent, {
           width: '300px',
-          data: { action: 'delete', class: selectedClass,  teacherData: this._allTeachersData }
+          data: { action: 'delete', class: selectedClass, teacherData: this._allTeachersData }
         }).afterClosed().subscribe(confirm => {
           if (confirm && selectedClass && selectedClass.id !== undefined) {
             this.classService.deleteClass(selectedClass.id).subscribe({
@@ -126,4 +150,5 @@ export class ClassCreationComponent implements OnInit {
         break;
     }
   }
+  
 }

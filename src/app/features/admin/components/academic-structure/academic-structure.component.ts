@@ -33,7 +33,6 @@ export class AcademicStructureComponent implements OnInit {
 
     this.loadAll();
 
-
     this.instForm = this.fb.group({
       id: [null],
       name: ['', Validators.required],
@@ -131,15 +130,28 @@ export class AcademicStructureComponent implements OnInit {
 
   // program
   loadPrograms() { this.svc.listPrograms().subscribe(p => this.programs = p); }
-  saveProgram() { if (this.progForm.invalid) return; const v = this.progForm.value; if (v.id) this.svc.updateProgram(v.id, v).subscribe(() => this.afterSave('program')); else this.svc.createProgram(v).subscribe(() => this.afterSave('program')); }
+  saveProgram() {
+    if (this.progForm.invalid) return;
+    const v = this.progForm.value; if (v.id) this.svc.updateProgram(v.id, v).subscribe(() =>
+      this.afterSave('program')); else this.svc.createProgram(v).subscribe(() => this.afterSave('program'));
+  }
   editProgram(p: Program) { this.progForm.patchValue(p); window.scrollTo({ top: 0, behavior: 'smooth' }); }
   deleteProgram(id: number) { if (!confirm('Delete?')) return; this.svc.deleteProgram(id).subscribe(() => this.loadPrograms()); }
 
   // class
   loadClasses() { this.svc.listClasses().subscribe(c => this.classes = c); }
-  saveClass() { if (this.classForm.invalid) return; const v = this.classForm.value; if (v.id) this.svc.updateClass(v.id, v).subscribe(() => this.afterSave('class')); else this.svc.createClass(v).subscribe(() => this.afterSave('class')); }
-  editClass(c: ClassModel) { this.classForm.patchValue(c); window.scrollTo({ top: 0, behavior: 'smooth' }); }
-  deleteClass(id: number) { if (!confirm('Delete?')) return; this.svc.deleteClass(id).subscribe(() => this.loadClasses()); }
+  saveClass() {
+    if (this.classForm.invalid) return;
+    const v = this.classForm.value;
+    if (v.id) this.svc.updateClass(v.id, v).subscribe(() => this.afterSave('class'));
+    else this.svc.createClass(v).subscribe(() => this.afterSave('class'));
+  }
+  editClass(c: ClassModel) {
+    this.classForm.patchValue(c); window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  deleteClass(id: number) {
+    if (!confirm('Delete?')) return; this.svc.deleteClass(id).subscribe(() => this.loadClasses());
+  }
 
   // section
   loadSections() { this.svc.listSections().subscribe(s => this.sections = s); }

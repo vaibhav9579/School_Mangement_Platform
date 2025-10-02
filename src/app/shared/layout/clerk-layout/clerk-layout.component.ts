@@ -64,7 +64,7 @@ export class ClerkLayoutComponent {
       case "admission":
         this.router.navigate(['clerk/admission']);
         break;
-        
+
       case "fee":
         this.router.navigate(['clerk/fee']);
         break;
@@ -84,9 +84,21 @@ export class ClerkLayoutComponent {
       case "admission-confirm":
         this.router.navigate(['clerk/admission-confirm']);
         break;
-        
+
+      case "subject-assign":
+        this.router.navigate(['clerk/subject-assign']);
+        break;
+
       case "payment":
         this.router.navigate(['clerk/payment']);
+        break;
+
+      case "class-teacher":
+        this.router.navigate(['clerk/class-teacher']);
+        break;
+
+      case "subject-teacher":
+        this.router.navigate(['clerk/subject-teacher']);
         break;
     }
   }

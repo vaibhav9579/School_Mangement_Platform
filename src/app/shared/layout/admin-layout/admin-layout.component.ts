@@ -154,6 +154,10 @@ export class AdminLayoutComponent implements OnInit {
       case "admission-approve":
         this.router.navigate(['admin/admission-approve']);
         break;
+
+      case "apply-classteacher":
+        this.router.navigate(['admin/apply-classteacher']);
+        break;
     }
   }
 }

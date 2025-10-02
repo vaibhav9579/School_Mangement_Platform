@@ -30,7 +30,7 @@
       <!-- Class Teacher Column -->
       <ng-container matColumnDef="classTeacher">
         <th mat-header-cell *matHeaderCellDef>Class-Teacher </th>
-        <td mat-cell *matCellDef="let user"> {{user.classteacher}} </td>
+        <td mat-cell *matCellDef="let user"> {{getRoleNameById(user.classteacher)}} </td>
       </ng-container>
 
       <!-- Actions Column -->
