@@ -1,0 +1,45 @@
+<div class="p-4 md:p-6 bg-gray-50 min-h-screen">
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">My Weekly Schedule</h1>
+  </div>
+
+  <div *ngIf="isLoading" class="text-center py-10">
+    <p class="text-gray-500">Loading your schedule...</p>
+  </div>
+
+  <div *ngIf="!isLoading" class="overflow-x-auto bg-white rounded-lg shadow">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-100">
+        <tr>
+          <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Time
+          </th>
+          <th *ngFor="let day of daysOfWeek" scope="col" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+            {{ day.name }}
+          </th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <tr *ngFor="let slot of timeSlots">
+          <td class="px-4 py-4 font-medium text-sm text-gray-800 whitespace-nowrap">
+            {{ slot.start_time | slice:0:5 }} - {{ slot.end_time | slice:0:5 }}
+          </td>
+          
+          <td *ngFor="let day of daysOfWeek" class="px-3 py-3 text-center text-sm" [class.bg-gray-50]="slot.is_break">
+            
+            <div *ngIf="timetableGrid[day.id] && timetableGrid[day.id][slot.slot_id] as entry" 
+                 class="p-2 bg-indigo-100 text-indigo-800 rounded-lg shadow-sm">
+              <p class="font-bold">{{ entry.subject_name }}</p>
+              <p class="text-xs">{{ entry.class_name }} - {{ entry.section_name }}</p>
+            </div>
+
+            <div *ngIf="slot.is_break" class="font-semibold text-gray-400">
+              BREAK
+            </div>
+
+            </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -67,7 +67,6 @@ export class LoginComponent {
         next: (res) => {
           const _roleId = res.user.role;
           const _userId = res.user.id;
-          console.log("User ID from response:", _userId);
           this.roleService.getRoleById(_roleId).subscribe({
             next: (roleData) => {
               // this.authService.setRoleName(roleData.name);

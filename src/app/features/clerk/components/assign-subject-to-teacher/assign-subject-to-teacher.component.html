@@ -49,11 +49,23 @@
             <!-- Subject Name -->
             <div>
                 <label class="block text-sm mb-1">Subjects</label>
-                <select formControlName="name" class="w-full border rounded p-2">
+                <select formControlName="name" class="w-full border rounded p-2" >
                     <option [ngValue]="null">Select Subject</option>
-                    <option *ngFor="let subject of _selClassAllSubjects" [value]="subject.id">{{ subject.name }}</option>
+                    <option *ngFor="let subject of _selClassAllSubjects" [ngValue]="subject">{{ subject.name }}
+                    </option>
                 </select>
             </div>
+
+            <!-- Subject Code -->
+            <!-- <div>
+                <label class="block text-sm mb-1">Code</label>
+                <select formControlName="name" class="w-full border rounded p-2">
+                    <input type="text" formControlName="code"  readonly class="w-full border rounded p-2">
+                     <option [ngValue]="null">Subject code</option>
+                    <option *ngFor="let subject of _selClassAllSubjects" [value]="subject.name">{{ subject.name }}
+                    </option> -->
+                <!-- </select>
+            </div> -->
 
             <!-- class teacher name -->
             <div>

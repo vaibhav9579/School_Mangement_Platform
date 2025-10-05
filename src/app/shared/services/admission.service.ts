@@ -113,4 +113,15 @@ export class AdmissionService {
   deleteDocument(docId: number) {
     return this.http.delete(`${this.base}/documents/${docId}`);
   }
+
+    getAdmissionsByClass(classId: number, status?: string): Observable<any[]> {
+    let url = `${this.base}/admissions/class/${classId}`;
+
+    if (status) {
+      url += `?status=${status}`;
+    }
+    
+    return this.http.get<any[]>(url);
+  }
+
 }

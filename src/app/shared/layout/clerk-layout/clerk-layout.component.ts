@@ -100,6 +100,18 @@ export class ClerkLayoutComponent {
       case "subject-teacher":
         this.router.navigate(['clerk/subject-teacher']);
         break;
+
+      case "mark_memo":
+        this.router.navigate(['clerk/mark_memo']);
+        break;
+
+      case "inward":
+        this.router.navigate(['clerk/inward']);
+        break;
+
+            case "outward":
+        this.router.navigate(['clerk/outward']);
+        break;
     }
   }
 }

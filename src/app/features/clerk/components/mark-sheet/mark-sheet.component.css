@@ -1,0 +1,12 @@
+table {
+      width: 100%;
+      margin-top: 8px;
+    }
+    th {
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    mat-dialog-content {
+      max-height: 400px;
+      overflow: auto;
+    }

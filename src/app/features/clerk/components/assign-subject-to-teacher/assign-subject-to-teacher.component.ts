@@ -155,6 +155,15 @@ export class AssignSubjectToTeacherComponent {
     }
   }
 
+  // onSubjectChange(event: Event) {
+  //   const select = event.target as HTMLSelectElement;
+  //   const subjectId = +select.value;
+
+  //   if(subjectId){
+  //    const selectedSubjectCode =  this._selClassAllSubjects.filter(subject=> subject.id = subjectId)
+  //   }
+  // }
+
   // CRUD
   save() {
     console.log("save function is activating");
@@ -167,10 +176,18 @@ export class AssignSubjectToTeacherComponent {
     // } else {
     //   this.subjectService.create(val).subscribe((created) => this.afterSave(created));
     // }
-    
-    if (val.class_id) {
-      console.log("val", val.class_id)
-      this.subjectService.upadateTeacherId(this.form.value.name, this.form.value).subscribe(data => {
+
+    if (val.name && val.name.id) {
+
+      const subjectId = val.name.id;
+      const payload = {
+        ...val,
+        name: val.name.name
+      }
+      console.log("subject id", subjectId);
+      console.log("payload", payload);
+
+      this.subjectService.update(subjectId, payload).subscribe(data => {
         console.log("*****", data);
       });
     }

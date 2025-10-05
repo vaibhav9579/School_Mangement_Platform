@@ -16,6 +16,7 @@ import { LeavePolicyComponent } from './components/leave-policy/leave-policy.com
 import { AdmissionApprovalComponent } from './components/admission-approval/admission-approval.component';
 import { AcademicStructureComponent } from './components/academic-structure/academic-structure.component';
 import { ApplyClassTeacherComponent } from './components/apply-class-teacher/apply-class-teacher.component';
+import { TimeTableComponent } from './components/time-table/time-table.component';
 
  const ADMIN_ROUTES: Routes = [
   {
@@ -39,6 +40,7 @@ import { ApplyClassTeacherComponent } from './components/apply-class-teacher/app
       { path: 'admission-approve', component: AdmissionApprovalComponent },
       {path : 'academic-structure', component: AcademicStructureComponent},
       {path : 'apply-classteacher', component: ApplyClassTeacherComponent},
+      {path : 'time-table', component: TimeTableComponent},
     ] 
   }
 ]

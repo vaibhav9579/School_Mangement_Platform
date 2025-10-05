@@ -19,10 +19,10 @@
       </a>
 
 
-      <a (click)="navigateToSelDash('admission-confirm')" routerLinkActive="bg-blue-700"
+      <!-- <a (click)="navigateToSelDash('admission-confirm')" routerLinkActive="bg-blue-700"
         class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
         <i class="bi bi-person-badge w-5 text-center"></i> Admission Confirm
-      </a>
+      </a> -->
 
 
       <a (click)="navigateToSelDash('fee')" routerLinkActive="bg-blue-700"
@@ -40,15 +40,15 @@
         <i class="bi bi-person-video3 w-5 text-center"></i>Student Records
       </a>
 
-      <a (click)="navigateToSelDash('teacherreacord')" routerLinkActive="bg-blue-700"
+      <!-- <a (click)="navigateToSelDash('teacherreacord')" routerLinkActive="bg-blue-700"
         class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
         <i class="bi bi-person-video3 w-5 text-center"></i>Teacher Records
-      </a>
+      </a> -->
 
-      <a (click)="navigateToSelDash('teacherreacord')" routerLinkActive="bg-blue-700"
+      <!-- <a (click)="navigateToSelDash('teacherreacord')" routerLinkActive="bg-blue-700"
         class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
         <i class="bi bi-cash-stack w-5 text-center"></i>Payment
-      </a>
+      </a> -->
 
       <a (click)="navigateToSelDash('subject-assign')" routerLinkActive="bg-blue-700"
         class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
@@ -63,6 +63,21 @@
       <a (click)="navigateToSelDash('subject-teacher')" routerLinkActive="bg-blue-700"
         class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
         <i class="bi bi-cash-stack w-5 text-center"></i>Assign Teacher to Subject
+      </a>
+
+      <a (click)="navigateToSelDash('mark_memo')" routerLinkActive="bg-blue-700"
+        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+        <i class="bi bi-cash-stack w-5 text-center"></i>Mark Memo
+      </a>
+
+      <a (click)="navigateToSelDash('inward')" routerLinkActive="bg-blue-700"
+        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+        <i class="bi bi-cash-stack w-5 text-center"></i>Inward
+      </a>
+
+            <a (click)="navigateToSelDash('outward')" routerLinkActive="bg-blue-700"
+        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
+        <i class="bi bi-cash-stack w-5 text-center"></i>Outward
       </a>
 
     </nav>
@@ -91,7 +106,7 @@
     </header>
 
     <!-- Main Router Content -->
-    <main class="flex-1 p-0 overflow-auto border-b">
+    <main class="flex-1 p-2 overflow-auto border-b">
       <router-outlet></router-outlet>
     </main>
   </div>

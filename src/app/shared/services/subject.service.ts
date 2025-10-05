@@ -26,7 +26,7 @@ export class SubjectService {
   /** Base URL for all subject-related API requests */
   private baseUrl = 'http://localhost:5000/api/subjects';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   /**
    * Fetch a list of subjects
@@ -39,7 +39,7 @@ export class SubjectService {
     return this.http.get<Subject[]>(this.baseUrl + qs);
   }
 
-  getParticularClassAllSubjects(classId: any): Observable<string[]>{
+  getParticularClassAllSubjects(classId: any): Observable<string[]> {
     return this.http.get<any>(`${this.baseUrl}/${classId}`);
   }
 
@@ -50,6 +50,10 @@ export class SubjectService {
    */
   create(subject: Subject): Observable<Subject> {
     return this.http.post<Subject>(this.baseUrl, subject);
+  }
+
+  getSubjectsByTeacher(teacherId: number): Observable<Subject[]> {
+    return this.http.get<Subject[]>(`${this.baseUrl}/teacher/${teacherId}`);
   }
 
   /**
@@ -76,4 +80,9 @@ export class SubjectService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
+
+  getSubjectsByTeacherAndClass(teacherId: number, classId: number): Observable<Subject[]> {
+  return this.http.get<Subject[]>(`${this.baseUrl}/teacher/${teacherId}/class/${classId}`);
+}
+
 }

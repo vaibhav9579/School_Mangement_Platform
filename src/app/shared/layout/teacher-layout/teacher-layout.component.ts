@@ -41,6 +41,7 @@ export class TeacherLayoutComponent  implements OnInit{
     else if (url.includes('studentLeave')) this.pageTitle = 'Student Leave';
     else if (url.includes('myleave')) this.pageTitle = 'My Leave';
     else if (url.includes('leaverequest')) this.pageTitle = 'Leave Request';
+    else if (url.includes('class')) this.pageTitle = 'Classes';
     else this.pageTitle = '';
     }
 

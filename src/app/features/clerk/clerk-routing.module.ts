@@ -12,13 +12,15 @@ import { AdmissionComponent } from './components/admission/admission.component';
 import { SubjectAssignComponent } from './components/subject-assign/subject-assign.component';
 import { ClassTeacherComponent } from './components/class-teacher/class-teacher.component';
 import { AssignSubjectToTeacherComponent } from './components/assign-subject-to-teacher/assign-subject-to-teacher.component';
+import { MarkMemoComponent } from './components/mark-memo/mark-memo.component';
+import { ShowMarkComponent } from './components/show-mark/show-mark.component';
+import { InwardRegistersComponent } from './components/inward-registers/inward-registers.component';
+import { OutwardRegisterComponent } from './components/outward-register/outward-register.component';
 export const CLERK_ROUTES: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('../../shared/layout/clerk-layout/clerk-layout.component').then(
-        (m) => m.ClerkLayoutComponent
-      ),
+      import('../../shared/layout/clerk-layout/clerk-layout.component').then( (m) => m.ClerkLayoutComponent ),
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
@@ -36,6 +38,10 @@ export const CLERK_ROUTES: Routes = [
       { path: 'subject-assign', component: SubjectAssignComponent },
       { path: 'class-teacher', component: ClassTeacherComponent },
       { path: 'subject-teacher', component: AssignSubjectToTeacherComponent },
+      { path: 'mark_memo', component: MarkMemoComponent },
+      { path: 'show-mark/:class_id', component: ShowMarkComponent },
+      { path: 'inward', component: InwardRegistersComponent },
+      { path: 'outward', component: OutwardRegisterComponent },
     ],
   },
 ];

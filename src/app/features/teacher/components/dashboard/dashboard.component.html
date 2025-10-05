@@ -8,7 +8,6 @@
     </div>
   </div> -->
 
-
   <!-- Summary Cards -->
   <!-- <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
     <div class="bg-white shadow rounded-lg p-6 text-center">
@@ -41,14 +40,13 @@
       <i class="bi bi-building"></i>
       <p class="text-lg opacity-80">My Class</p>
       <!-- <h2 class="text-3xl font-bold">{{ assignedClassesCount}}</h2> -->
-      <h2 class="text-3xl font-bold" *ngFor="let className of assignedClasses">{{ className }}</h2>
-
+      <h2 class="text-3xl font-bold" *ngFor="let className of assignedClasses">{{ className.name }}</h2>
     </div>
 
     <div class="bg-blue-400 text-white p-6 rounded-xl shadow-md text-4xl">
       <i class="bi bi-mortarboard"></i>
       <p class="text-lg opacity-80">My Students</p>
-      <h2 class="text-3xl font-bold">{{ myStudents | number }}</h2>
+      <h2 class="text-3xl font-bold">{{ _totalStudents | number }}</h2>
     </div>
     <div class="bg-green-400 text-white p-6 rounded-xl shadow-md text-center text-4xl">
       <i class="bi bi-clipboard-check"></i>

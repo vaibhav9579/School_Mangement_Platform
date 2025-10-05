@@ -12,7 +12,18 @@
       <!-- Step 1 -->
       <div *ngIf="step===1">
         <h3 class="text-lg font-semibold mb-2">Student Details</h3>
-        <input class="border rounded p-2 w-full mb-2" formControlName="full_name" placeholder="Full Name" />
+        <input class="border rounded p-2 w-full mb-2" formControlName="first_name" placeholder="First Name" />
+
+        <input class="border rounded p-2 w-full mb-2" formControlName="middle_name" placeholder="Middle Name" />
+
+        <input class="border rounded p-2 w-full mb-2" formControlName="last_name" placeholder="Last Name" />
+
+        <div class="grid grid-cols-2 gap-2">
+          <input class="border rounded p-2 w-full mb-2" formControlName="candidate_contact"
+            placeholder="Candidate Contact" />
+
+          <input class="border rounded p-2 w-full mb-2" formControlName="candidate_mail" placeholder="Candidate Mail" />
+        </div>
 
         <div class="grid grid-cols-2 gap-2">
           <input type="date" class="border rounded p-2" formControlName="dob" />
@@ -24,12 +35,23 @@
           </select>
         </div>
 
-        <input class="border rounded p-2 mt-2" formControlName="guardian_name" placeholder="Parent/Guardian" />
-        <input class="border rounded p-2 mt-2" formControlName="contact" placeholder="Contact" />
-        <textarea class="border rounded p-2 mt-2" formControlName="address" placeholder="Address"></textarea>
+        <div class="grid grid-cols-2 gap-2">
+          <input class="border rounded p-2 mt-2" formControlName="guardian_name" placeholder="Parent/Guardian name" />
+          <input class="border rounded p-2 mt-2" formControlName="contact" placeholder="Parent Contact" />
+        </div>
 
+        <div class="grid grid-cols-3 gap-2">
+          <textarea class="border rounded p-2 mt-2" formControlName="address_line1" placeholder="Address"></textarea>
+
+          <textarea class="border rounded p-2 mt-2" formControlName="address_line2" placeholder="Address"></textarea>
+
+          <textarea class="border rounded p-2 mt-2" formControlName="address_line3" placeholder="Address"></textarea>
+        </div>
+
+        <div class="grid gap-2">
         <label class="text-sm mt-2">Photo</label>
         <input type="file" (change)="onFileChange($event,'photo')" class="block mt-1" />
+        </div>
       </div>
 
       <!-- Step 2 -->

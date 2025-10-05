@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AdmissionService } from '../../../../shared/services/admission.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -11,6 +11,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './admission-form.component.html',
   styleUrl: './admission-form.component.css'
 })
+
 export class AdmissionFormComponent implements OnInit {
   step = 1;
   maxStep = 5;
@@ -25,31 +26,62 @@ export class AdmissionFormComponent implements OnInit {
   };
 
   feeBreakdown: { item: string; amount: number }[] = [];
-
   constructor(
     private fb: FormBuilder,
     private svc: AdmissionService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // ✅ initialize form here
+    // this.form = this.fb.group({
+    //   full_name: [''],
+    //   dob: [''],
+    //   gender: [''],
+    //   guardian_name: [''],
+    //   contact: [''],
+    //   address: [''],
+    //   institution_type: ['School'],
+    //   school_class: [''],
+    //   school_section: [''],
+    //   college_department: [''],
+    //   college_program: [''],
+    //   college_year: [''],
+    //   college_section: [''],
+    //   admission_no: [''],
+    //   fee_structure_id: [''],
+    //   initial_payment_received: [false],
+    //   initial_payment_amount: [0]
+    // });
+
+    /**
+     * @description: "admission form group"
+     */
     this.form = this.fb.group({
-      full_name: [''],
-      dob: [''],
-      gender: [''],
-      guardian_name: [''],
-      contact: [''],
-      address: [''],
+      admission_no: [''],
+      first_name: ['', Validators.required],
+      middle_name: ['', Validators.required],
+      last_name: ['', Validators.required],
+      dob: ['', Validators.required],
+      gender: ['', Validators.required],
+      candidate_contact: ['', Validators.required],
+      guardian_name: ['', Validators.required],
+      candidate_mail: ['', Validators.required],
+      guardian_contact: ['', Validators.required],
+      address_line1: ['', Validators.required],
+      address_line2: [''],
+      address_line3: [''],
       institution_type: ['School'],
-      school_class: [''],
-      school_section: [''],
-      college_department: [''],
+      institute_id: ['', Validators.required],
+      department_id: [''],
+      program_id: [''],
+      class_id: ['', Validators.required],
+      section_id: [''],
+      course_total_fee: ['', Validators.required],
       college_program: [''],
       college_year: [''],
       college_section: [''],
-      admission_no: [''],
       fee_structure_id: [''],
       initial_payment_received: [false],
       initial_payment_amount: [0]
@@ -61,7 +93,7 @@ export class AdmissionFormComponent implements OnInit {
       this.admissionId = Number(id);
       this.load(this.admissionId);
     } else {
-      this.form.patchValue({ admission_no: `PREVIEW-${Date.now()}` });
+      this.form.patchValue({ admission_no: `CC-${Date.now()}` });
       this.loadFeeStructure();
     }
 

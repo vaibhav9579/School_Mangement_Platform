@@ -158,6 +158,10 @@ export class AdminLayoutComponent implements OnInit {
       case "apply-classteacher":
         this.router.navigate(['admin/apply-classteacher']);
         break;
+
+      case "time-table":
+        this.router.navigate(['admin/time-table']);
+        break;
     }
   }
 }

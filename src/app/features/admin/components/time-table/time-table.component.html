@@ -1,0 +1,78 @@
+<div class="p-4 md:p-6 bg-gray-50">
+  <h1 class="text-3xl font-bold text-gray-800 mb-6">Timetable Management</h1>
+
+  <div class="mb-6 border-b border-gray-200">
+    <nav class="-mb-px flex space-x-6">
+      <a (click)="activeTab = 'builder'" [class.border-blue-500]="activeTab === 'builder'" class="cursor-pointer py-2 px-1 border-b-2 font-medium text-sm">Timetable Builder</a>
+      <a (click)="activeTab = 'slots'" [class.border-blue-500]="activeTab === 'slots'" class="cursor-pointer py-2 px-1 border-b-2 font-medium text-sm">Manage Time Slots</a>
+      <a (click)="activeTab = 'assignments'" [class.border-blue-500]="activeTab === 'assignments'" class="cursor-pointer py-2 px-1 border-b-2 font-medium text-sm">Manage Assignments</a>
+    </nav>
+  </div>
+
+  <div *ngIf="activeTab === 'builder'">
+    <div [formGroup]="timetableSelectionForm" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 p-4 bg-white rounded-lg shadow">
+        <select formControlName="class_id" class="p-2 border rounded-md">
+            <option [ngValue]="null" disabled>Select Class</option>
+            <option *ngFor="let class of classes" [value]="class.id">{{ class.name }}</option>
+        </select>
+        <select formControlName="section_id" class="p-2 border rounded-md">
+            <option [ngValue]="null" disabled>Select Section</option>
+            <option *ngFor="let section of sections" [value]="section.id">{{ section.name }}</option>
+        </select>
+    </div>
+
+    <div class="overflow-x-auto bg-white rounded-lg shadow">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">Time</th>
+            <th *ngFor="let day of daysOfWeek" class="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase">{{ day.name }}</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <tr *ngFor="let slot of timeSlots">
+            <td class="px-3 py-4 font-medium text-sm whitespace-nowrap">{{ slot.start_time | slice:0:5 }} - {{ slot.end_time | slice:0:5 }}</td>
+            <td *ngFor="let day of daysOfWeek" class="px-3 py-4 text-center text-sm relative" [class.bg-blue-50]="slot.is_break">
+                <div *ngIf="!slot.is_break">
+                    <div *ngIf="timetableGrid[day.id] && timetableGrid[day.id][slot.slot_id] as entry" class="p-2 bg-green-100 rounded-md">
+                        <p class="font-bold">{{ entry.subject_name }}</p>
+                        <p class="text-xs text-gray-600">{{ entry.teacher_name }}</p>
+                        <button (click)="onDeleteEntry(entry.entry_id)" class="absolute top-1 right-1 text-red-500 hover:text-red-700">&times;</button>
+                    </div>
+                    <button *ngIf="!(timetableGrid[day.id] && timetableGrid[day.id][slot.slot_id]) && timetableSelectionForm.valid"
+                            (click)="openEntryModal(day.id, slot.slot_id)"
+                            class="w-full h-full text-gray-400 hover:bg-gray-100 rounded-md">+</button>
+                </div>
+                <div *ngIf="slot.is_break" class="font-semibold text-gray-500">BREAK</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <div *ngIf="activeTab === 'slots'">...</div>
+  
+  <div *ngIf="activeTab === 'assignments'">...</div>
+
+  <div *ngIf="isModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-md">
+      <h3 class="text-lg font-bold mb-4">Add Period</h3>
+      <form [formGroup]="entryForm" (ngSubmit)="onSaveEntry()">
+          <select formControlName="assignment_id" class="w-full p-2 border rounded-md">
+              <option [ngValue]="null" disabled>Select Subject & Teacher</option>
+              <option *ngFor="let assignment of assignments" [value]="assignment.assignment_id">
+                  {{ assignment.subject_name }} - {{ assignment.teacher_name }}
+              </option>
+          </select>
+          <div *ngIf="modalError" class="mt-2 text-sm text-red-600 bg-red-100 p-2 rounded-md">
+              {{ modalError }}
+          </div>
+          <div class="mt-6 flex justify-end space-x-4">
+              <button type="button" (click)="isModalOpen = false" class="px-4 py-2 bg-gray-200 rounded-md">Cancel</button>
+              <button type="submit" [disabled]="entryForm.invalid" class="px-4 py-2 bg-blue-600 text-white rounded-md">Save</button>
+          </div>
+      </form>
+    </div>  
+  </div>
+</div>

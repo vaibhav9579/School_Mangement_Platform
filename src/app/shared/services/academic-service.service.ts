@@ -38,18 +38,19 @@ export class AcademicServiceService {
     return this.http.get<ClassModel[]>(`${this.base}/classes${qs ? ('?' + qs) : ''}`);
   }
 
-  createClass(c: ClassModel) { 
-    console.log("create class", `${this.base}/classes`, c);
-    return this.http.post<ClassModel>(`${this.base}/classes`, c); 
+  getParticularClassByclassId(classId: number): Observable<any> {
+    return this.http.get<any>(`${this.base}/classes/${classId}`);
   }
 
-    updateClass(id: number, c: Partial<ClassModel>) {
-      console.log("data", `${this.base}/classes/${id}`, c);
-      return this.http.put<ClassModel>(`${this.base}/classes/${id}`, c);   
-      }
+  createClass(c: ClassModel) {
+    console.log("create class", `${this.base}/classes`, c);
+    return this.http.post<ClassModel>(`${this.base}/classes`, c);
+  }
 
-    
-      
+  updateClass(id: number, c: Partial<ClassModel>) {
+    console.log("data", `${this.base}/classes/${id}`, c);
+    return this.http.put<ClassModel>(`${this.base}/classes/${id}`, c);
+  }
   deleteClass(id: number) { return this.http.delete(`${this.base}/classes/${id}`); }
 
   // sections
