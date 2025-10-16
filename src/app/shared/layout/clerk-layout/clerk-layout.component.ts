@@ -1,10 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule, RouterOutlet } from '@angular/router';
 import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-clerk-layout',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, CommonModule, ReactiveFormsModule, FormsModule, RouterModule],
   templateUrl: './clerk-layout.component.html',
   styleUrls: ['./clerk-layout.component.css']
 })
@@ -13,6 +15,22 @@ export class ClerkLayoutComponent {
   pageTitle = '';
   public _userName: string = '';
   public _userRole: string = '';
+  searchTerm = '';
+  isSidebarOpen = true;
+
+  menuItems = [
+    // { path: 'dashboard', label: 'Dashboard', icon: 'bi-house' },
+    { path: 'inward', label: 'Inward', icon: 'bi-cash-stack' },
+    { path: 'outward', label: 'Outward', icon: 'bi-cash-stack' },
+    { path: 'admission', label: 'Admission', icon: 'bi-person-badge' },
+    { path: 'fee', label: 'Fee Management', icon: 'bi-people' },
+    { path: 'attendance', label: 'Attendence Reports', icon: 'bi-calendar' },
+    { path: 'studentrecord', label: 'Student Records', icon: 'bi-person-video3' },
+    { path: 'subject-assign', label: 'Assign Subjects', icon: 'bi-cash-stack' },
+    { path: 'class-teacher', label: 'Class Teacher Assign', icon: 'bi-cash-stack' },
+    { path: 'subject-teacher', label: 'Assign Teacher to Subject', icon: 'bi-cash-stack' },
+    { path: 'mark_memo', label: 'Mark Memo', icon: 'bi-cash-stack' }
+  ];
 
   constructor(private router: Router) {
     this.router.events.subscribe(event => {
@@ -30,6 +48,24 @@ export class ClerkLayoutComponent {
       this._userName = userName;
       this._userRole = userRole;
     }
+
+    if (window.innerWidth < 768) {
+      this.isSidebarOpen = false;
+    }
+  }
+
+  // Toggles the sidebar open and closed
+  toggleSidebar(): void {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  filteredMenuItems() {
+    const term = this.searchTerm.toLowerCase();
+    return this.menuItems.filter(item => item.label.toLowerCase().includes(term));
+  }
+
+  clearSearch() {
+    this.searchTerm = '';
   }
 
   updatePageTitle() {
@@ -69,8 +105,8 @@ export class ClerkLayoutComponent {
         this.router.navigate(['clerk/fee']);
         break;
 
-      case "attendence":
-        this.router.navigate(['clerk/attendence']);
+      case "attendance":
+        this.router.navigate(['clerk/attendance']);
         break;
 
       case "studentrecord":
@@ -109,7 +145,7 @@ export class ClerkLayoutComponent {
         this.router.navigate(['clerk/inward']);
         break;
 
-            case "outward":
+      case "outward":
         this.router.navigate(['clerk/outward']);
         break;
     }

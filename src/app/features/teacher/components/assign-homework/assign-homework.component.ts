@@ -21,7 +21,7 @@ export class AssignHomeworkComponent {
   };
 
   homeworkList = [
-    { class: '', subject: 'Math', title: 'Algebra Worksheet', dueDate: '2025-06-25' }
+    { class: '5', subject: 'English', title: '10 Grammar questions', dueDate: '2025-10-15' }
   ];
 
   assignHomework() {

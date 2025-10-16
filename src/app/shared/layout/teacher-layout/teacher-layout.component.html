@@ -1,80 +1,61 @@
-<div class="flex h-screen bg-gray-100 cursor-pointer">
+<div class="flex h-screen bg-gray-100 font-sans main-layout">
   <!-- Sidebar -->
-  <aside class="w-64 bg-blue-800 text-white flex flex-col">
-    <!-- Logo -->
-    <div class="px-4 py-6 flex items-center gap-2 border-b border-blue-700">
-      <span class="text-lg font-bold tracking-wide">CONTROL CAMPUS</span>
+  <aside
+    class="bg-blue-800 text-white flex flex-col shadow-lg transition-all duration-300 ease-in-out overflow-y-auto overflow-x-hidden thin-scrollbar"
+    [ngClass]="{ 'w-74': isSidebarOpen, 'w-20': !isSidebarOpen }">
+
+    <!-- Header -->
+    <div class="px-4 py-8 flex items-center gap-2 border-b border-blue-700 h-[68px] overflow-hidden">
+      <button (click)="toggleSidebar()"
+        class="text-gray-600 hover:text-blue-600 focus:outline-none p-2 rounded-full hover:bg-gray-100 text-white">
+        <i class="bi bi-list text-2xl"></i>
+      </button>
+
+      <span class="text-lg font-bold tracking-wide transition-opacity duration-200 whitespace-nowrap"
+        [class.opacity-0]="!isSidebarOpen">
+        CONTROL CAMPUS
+      </span>
     </div>
 
     <!-- Navigation -->
-    <nav class="flex-1 p-4 space-y-2">
-      <a (click)="navigateToSelectedPage('dashboard')" routerLinkActive="bg-blue-700"
-        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-        <i class="bi bi-house w-5 text-center"></i> Dashboard
-      </a>
-      
-      <a (click)="navigateToSelectedPage('my-students')" routerLinkActive="bg-blue-700"
-        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-        <i class="bi bi-mortarboard w-5 text-center"></i> My Students
-      </a>
+    <nav class="flex-1 space-y-2">
+      <!-- Search Bar -->
+      <div class="relative mb-4 transition-opacity duration-200" [class.opacity-0]="!isSidebarOpen"
+        [class.pointer-events-none]="!isSidebarOpen">
+        <i class="bi bi-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+        <input type="text" placeholder="Search..." [(ngModel)]="searchTerm"
+          class="w-full pl-10 pr-8 py-2 rounded-md bg-blue-500 text-white placeholder-gray-300 border border-blue-600 focus:border-white focus:ring-2 focus:ring-white outline-none transition" />
+        <button *ngIf="searchTerm" (click)="clearSearch()"
+          class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-300 hover:text-white focus:outline-none">
+          <i class="bi bi-x-lg text-sm"></i>
+        </button>
+      </div>
 
-      <a (click)="navigateToSelectedPage('upload-result')" routerLinkActive="bg-blue-700"
-        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-        <i class="bi bi-easel w-5 text-center"></i> Upload Result
-      </a>
-
-      <a (click)="navigateToSelectedPage('attendance')" routerLinkActive="bg-blue-700"
-        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-        <i class="bi bi-calendar-check w-5 text-center"></i> Attendance
-      </a>
-
-      <a (click)="navigateToSelectedPage('assign-homework')" routerLinkActive="bg-blue-700"
-        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-        <i class="bi bi-journal-text w-5 text-center"></i> Assign Homework
-      </a>
-
-      <a (click)="navigateToSelectedPage('chat')" routerLinkActive="bg-blue-700"
-        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-        <i class="bi bi-chat-dots w-5 text-center"></i> Chat
-      </a>
-
-      <a (click)="navigateToSelectedPage('studentLeave')" routerLinkActive="bg-blue-700"
-        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-        <i class="bi bi-chat-dots w-5 text-center"></i> Student Leave
-      </a>
-
-      <a (click)="navigateToSelectedPage('leaverequest')" routerLinkActive="bg-blue-700"
-        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-        <i class="bi bi-chat-dots w-5 text-center"></i> Leave Request
-      </a>
-
-      <a (click)="navigateToSelectedPage('myleave')" routerLinkActive="bg-blue-700"
-        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-        <i class="bi bi-chat-dots w-5 text-center"></i> My Leave
-      </a>
-
-      <a (click)="navigateToSelectedPage('class')" routerLinkActive="bg-blue-700"
-        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-        <i class="bi bi-chat-dots w-5 text-center"></i> Fill Mark
+      <!-- Dynamic Menu Items -->
+      <a *ngFor="let item of filteredMenuItems()" (click)="navigateToSelectedPage(item.path)"
+        [routerLink]="['/teacher', item.path]" routerLinkActive="bg-blue-700 font-semibold"
+        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition" [title]="item.label">
+        <i class="bi {{ item.icon }} w-5 text-center text-lg min-w-[48px]"></i>
+        <span class="transition-opacity duration-200 whitespace-nowrap" [class.opacity-0]="!isSidebarOpen">
+          {{ item.label }}
+        </span>
       </a>
     </nav>
   </aside>
 
-  <!-- Main Content Area -->
-  <div class="flex-1 flex flex-col">
-    <!-- Top Header -->
-    <header class="bg-white shadow px-6 py-4 flex justify-between items-center">
-      <h1 class="text-xl font-semibold text-gray-700"> {{ pageTitle }} </h1>
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <header class="bg-blue-800 text-white shadow px-6 py-4 flex justify-between items-center">
+      <h1 class="text-xl font-semibold ">{{ pageTitle }}</h1>
 
       <!-- Admin User Dropdown -->
       <div class="relative group">
         <button class="flex items-center gap-2 focus:outline-none">
-          <span class="text-gray-700">{{_userName}} <b>({{_userRole}})</b></span>
+          <span class="text-white">{{_userName}} <b>({{_userRole}})</b></span>
           <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white">
             <i class="bi bi-person"></i>
           </div>
         </button>
-        <div class="absolute right-0 mt-0 w-40 bg-white rounded shadow-lg hidden group-hover:block">
+        <div class="absolute right-0 w-40 bg-white rounded shadow-lg hidden group-hover:block">
           <button (click)="logout()" class="flex items-center gap-2 w-full px-4 py-2 hover:bg-gray-100 text-gray-700">
             <i class="bi bi-box-arrow-right"></i> Logout
           </button>
@@ -82,8 +63,7 @@
       </div>
     </header>
 
-    <!-- Main Router Content -->
-    <main class="flex-1 p-2 overflow-auto border-b">
+    <main class="flex-1 overflow-auto bg-gray-100 p-6 thin-scrollbar">
       <router-outlet></router-outlet>
     </main>
   </div>

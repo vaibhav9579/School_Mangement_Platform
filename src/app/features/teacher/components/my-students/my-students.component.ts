@@ -28,16 +28,18 @@ export interface Student {
     MatIconModule,
     MatPaginatorModule,
     MatSortModule
-  ],
+  ],  
   templateUrl: './my-students.component.html',
   styleUrl: './my-students.component.css'
 })
+
 export class MyStudentsComponent implements OnInit {
   public assignedClasses: any[] = [];
   dataSource = new MatTableDataSource<Student>();
   
   // 👇 define column config dynamically
-  displayedColumns: string[] = ['id', 'name', 'class', 'contact', 'email', 'actions'];
+  displayedColumns: string[] = ['id', 'name', 'contact', 'email', 'actions'];
+  // displayedColumns: string[] = ['id', 'name', 'class', 'contact', 'email', 'actions'];
   constructor(
     private _authService: AuthServiceService,
     private _academicService: AcademicServiceService,
@@ -48,6 +50,7 @@ export class MyStudentsComponent implements OnInit {
     this.getUserDetails();
     // load dummy for now
     this.dataSource.data = [];
+    
   }
 
   getUserDetails() {

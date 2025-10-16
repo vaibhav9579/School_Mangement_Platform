@@ -1,8 +1,9 @@
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center" >
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center mainContainer" >
     <div class="bg-blue-400 text-white p-6 rounded-xl shadow-md" *ngFor="let class of selTeacherClassId; let i = index" (click)="navigateTofillMark(class)">
       <i class="bi bi-people text-4xl mb-2"></i>
       <!-- <p class="text-sm opacity-80">{{getClassName(class)}}</p> -->
       <!-- <h2 class="text-3xl font-bold">{{ totalStudents | number:'1.0-0':'en-IN' }}</h2> -->
       <h2 class="text-3xl font-bold"> {{getClassName(class)}}</h2>
+      <!-- <h4 class="text-3xl font-bold"> {{getClassName(class)}}</h4> -->
     </div>
   </div>

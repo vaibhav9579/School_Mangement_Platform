@@ -21,7 +21,7 @@ export const TEACHER_ROUTES: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'my-students', component: MyStudentsComponent },
-      { path: 'upload-result', component: UploadResultComponent },
+      // { path: 'upload-result', component: UploadResultComponent },
       { path: 'assign-homework', component: AssignHomeworkComponent },
       { path: 'chat', component: ChatComponent },
       { path: 'attendance', component: AttendanceComponent },

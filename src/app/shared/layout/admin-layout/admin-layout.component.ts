@@ -1,167 +1,114 @@
+
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { Router, NavigationEnd, RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { filter } from 'rxjs/operators';
+
+interface MenuItem {
+  label: string;
+  icon: string;
+  path: string;
+}
 
 @Component({
   selector: 'app-admin-layout',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [
+    RouterOutlet, 
+    CommonModule, 
+    FormsModule,
+    RouterLink,
+    RouterLinkActive
+  ],
   templateUrl: './admin-layout.component.html',
-  styleUrl: './admin-layout.component.css',
+  styleUrls: ['./admin-layout.component.css'],
 })
-
 export class AdminLayoutComponent implements OnInit {
-  pageTitle = '';
+  pageTitle = 'Dashboard';
   public _userName: string = '';
   public _userRole: string = '';
+  searchTerm: string = '';
+  isSidebarOpen = true; // Controls the sidebar state (open/closed)
+
+  public menuItems: MenuItem[] = [
+    { label: 'Dashboard', icon: 'bi-speedometer2', path: 'dashboard' },
+    { label: 'Add Role', icon: 'bi-person-plus', path: 'addrole' },
+    { label: 'Manage User', icon: 'bi-people', path: 'user' },
+    { label: 'Academic Structure', icon: 'bi-diagram-3', path: 'academic-structure' },
+    { label: 'Admission Approval', icon: 'bi-person-check', path: 'admission-approve' },
+    { label: 'Apply Class Teacher', icon: 'bi-person-badge', path: 'apply-classteacher' },
+    { label: 'Time Table', icon: 'bi-calendar-week', path: 'time-table' },
+    { label: 'Manage Classes', icon: 'bi-journal-text', path: 'class' },
+    { label: 'Leave Policy', icon: 'bi-file-earmark-text', path: 'leave-policy' },
+    { label: 'Leave Approval', icon: 'bi-check2-square', path: 'leave' },
+    { label: 'Leave Allotment', icon: 'bi-calendar-plus', path: 'Allotleave' },
+    { label: 'Notifications', icon: 'bi-bell', path: 'notification' },
+  ];
 
   constructor(private router: Router) {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.updatePageTitle();
-      }
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      this.updatePageTitle(event.urlAfterRedirects);
     });
   }
 
   ngOnInit(): void {
-    // fetch current user name
+    // Set initial sidebar state based on screen width.
+    // On mobile screens (< 768px), the sidebar will be closed by default.
+    if (window.innerWidth < 768) {
+      this.isSidebarOpen = false;
+    }
+    
     const userName = localStorage.getItem('name');
     const userRole = localStorage.getItem('role');
+
     if (userName && userRole) {
       this._userName = userName;
       this._userRole = userRole;
+    } else {
+      this._userName = 'Guest';
+      this._userRole = 'Unknown';
     }
+    
+    this.updatePageTitle(this.router.url);
   }
 
-  updatePageTitle() {
-    const url = this.router.url; // /admin/dashboard
-    console.log('url:', url);
-    if (url.includes('dashboard')) this.pageTitle = 'Dashboard';
-    else if (url.includes('student')) this.pageTitle = 'Manage Students';
-    else if (url.includes('teacher')) this.pageTitle = 'Manage Teachers';
-    else if (url.includes('fee')) this.pageTitle = 'Fee Management';
-    else if (url.includes('result')) this.pageTitle = 'Result Upload';
-    else if (url.includes('id')) this.pageTitle = 'ID Card Generator';
-    else if (url.includes('user')) this.pageTitle = 'Manage User';
-    else if (url.includes('class')) this.pageTitle = 'Manage Classes';
-    else if (url.includes('leave-policy')) this.pageTitle = 'Leave Policy';
-    // else if (url.includes('notification')) this.pageTitle = 'Notifications';
-    else this.pageTitle = '';
-
-    const _currentRouterLink = url.split('/')[2];
-
-    switch (_currentRouterLink) {
-      case 'dashboard':
-        this.pageTitle = 'Dashboard';
-        break;
-      case 'student':
-        this.pageTitle = 'Manage Students';
-        break;
-      case 'teacher':
-        this.pageTitle = 'Manage Teachers';
-        break;
-      case 'fee':
-        this.pageTitle = 'Fee Management';
-        break;
-      case 'result':
-        this.pageTitle = 'Result Upload';
-        break;
-      case 'id':
-        this.pageTitle = 'ID Card Generator';
-        break;
-      case 'user':
-        this.pageTitle = 'Manage User';
-        break;
-      case 'class':
-        this.pageTitle = 'Manage Classes';
-        break;
-      // case 'notification':
-      //   this.pageTitle = 'Notifications';
-      //   break;
-      default:
-        this.pageTitle = '';
-    }
+  // Toggles the sidebar open and closed
+  toggleSidebar(): void {
+    this.isSidebarOpen = !this.isSidebarOpen;
   }
 
-  logout() {
-    // TODO: Add auth service logout logic
+  filteredMenuItems(): MenuItem[] {
+    if (!this.searchTerm.trim()) {
+      return this.menuItems;
+    }
+
+    const term = this.searchTerm.toLowerCase();
+    return this.menuItems.filter(item =>
+      item.label.toLowerCase().includes(term)
+    );
+  }
+
+  clearSearch(): void {
+    this.searchTerm = '';
+  }
+
+  updatePageTitle(url: string): void {
+    const currentRoute = url.split('/').pop() || '';
+    const activeItem = this.menuItems.find(item => item.path === currentRoute);
+    
+    this.pageTitle = activeItem ? activeItem.label : 'Admin';
+  }
+
+  logout(): void {
+    localStorage.removeItem('name');
+    localStorage.removeItem('role');
     this.router.navigate(['/login']);
   }
 
-  navigateToSelDash(navigation: string) {
-    console.log('navigate function is activating');
-    this.router.navigate(['admin/user']);
-
-    switch (navigation) {
-      case "dashboard":
-        this.router.navigate(['admin/dashboard']);
-        break;
-
-      case "user":
-        this.router.navigate(['admin/user']);
-        break;
-
-      case "class":
-        this.router.navigate(['admin/class']);
-        break;
-
-      case "fee":
-        this.router.navigate(['admin/fee']);
-        break;
-
-      // case "teacher":
-      //   this.router.navigate(['admin/teacher']);
-      //   break;
-
-      case "result":
-        this.router.navigate(['admin/result']);
-        break;
-
-      case "id":
-        this.router.navigate(['admin/id']);
-        break;
-
-      case "leave":
-        this.router.navigate(['admin/leave']);
-        break;
-
-      case "notification":
-        this.router.navigate(['admin/notification']);
-        break;
-
-      case "leave":
-        this.router.navigate(['admin/leave']);
-        break;
-
-      case "addrole":
-        this.router.navigate(['admin/addrole']);
-        break;
-
-      case "Allotleave":
-        this.router.navigate(['/admin/Allotleave']);
-        break;
-
-      case "notification":
-        this.router.navigate(['admin/notification']);
-        break;
-
-      case "leave-policy":
-        this.router.navigate(['admin/leave-policy']);
-        break;
-
-      case "academic-structure":
-        this.router.navigate(['admin/academic-structure']);
-        break;
-
-      case "admission-approve":
-        this.router.navigate(['admin/admission-approve']);
-        break;
-
-      case "apply-classteacher":
-        this.router.navigate(['admin/apply-classteacher']);
-        break;
-
-      case "time-table":
-        this.router.navigate(['admin/time-table']);
-        break;
-    }
+  navigateToSelDash(page: string): void {
+    // Navigation is handled by [routerLink] in the template.
   }
 }

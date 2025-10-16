@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component , OnInit} from '@angular/core';
 import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
 
 @Component({
@@ -7,8 +7,10 @@ import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
   templateUrl: './student-layout.component.html',
   styleUrl: './student-layout.component.css'
 })
-export class StudentLayoutComponent {
+export class StudentLayoutComponent  implements OnInit {
  pageTitle = '';
+  public _userName: string = '';
+  public _userRole: string = ''
 
   constructor(private router: Router) {
     this.router.events.subscribe(event => {
@@ -18,6 +20,15 @@ export class StudentLayoutComponent {
     });
   }
 
+  ngOnInit(): void {
+    // this.updatePageTitle();
+        const userName = localStorage.getItem('name');
+    const userRole = localStorage.getItem('role');
+    if (userName && userRole) {
+      this._userName = userName;
+      this._userRole = userRole;
+    }
+  }
   updatePageTitle() {
     const url = this.router.url;
     if (url.includes('dashboard')) this.pageTitle = 'Dashboard';

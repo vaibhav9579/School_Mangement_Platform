@@ -17,6 +17,7 @@ import { AdmissionApprovalComponent } from './components/admission-approval/admi
 import { AcademicStructureComponent } from './components/academic-structure/academic-structure.component';
 import { ApplyClassTeacherComponent } from './components/apply-class-teacher/apply-class-teacher.component';
 import { TimeTableComponent } from './components/time-table/time-table.component';
+import { TimeTableTempComponent } from './components/time-table-temp/time-table-temp.component';
 
  const ADMIN_ROUTES: Routes = [
   {
@@ -40,7 +41,8 @@ import { TimeTableComponent } from './components/time-table/time-table.component
       { path: 'admission-approve', component: AdmissionApprovalComponent },
       {path : 'academic-structure', component: AcademicStructureComponent},
       {path : 'apply-classteacher', component: ApplyClassTeacherComponent},
-      {path : 'time-table', component: TimeTableComponent},
+      // {path : 'time-table', component: TimeTableComponent},
+      {path : 'time-table', component: TimeTableTempComponent},
     ] 
   }
 ]

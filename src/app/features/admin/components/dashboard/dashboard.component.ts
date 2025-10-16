@@ -6,6 +6,11 @@ import { CommonModule } from '@angular/common';
 import * as echarts from 'echarts';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { AdmissionService } from '../../../../shared/services/admission.service';
+import { UserService } from '../../../../shared/services/user.service';
+import { User } from '../../models/user';
+import { AcademicServiceService } from '../../../../shared/services/academic-service.service';
+import { Class } from '../../models/class';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,23 +25,73 @@ export class DashboardComponent implements AfterViewInit {
   // totalTeachers = 3;
   // totalClasses = 3;
   averageAttendance = 85; // Example value
+  totalStudents: number = 0;
+  public _allTeachersData: User[] = [];
+  public _role: number = 12; // teacher role
+  public _classes: any[] = [];
+
+  constructor(
+    private adminService: AdmissionService,
+    private userService: UserService,
+    private _academicsService: AcademicServiceService
+  ) { }
 
   ngOnInit() {
     // TODO: Replace with API calls
+    this.getTotalStudents();
+    // this.getTotalTeachers();
+    // this.getTotalClasses();
+    this.getTeacherData();
+    this.getClasses();
   }
-  
-  totalStudents = 1200;
-  totalTeachers = 75;
-  totalClasses = 40;
+
+  // totalStudents = 1200;
+  totalTeachers: number = 0;
+  totalClasses: number = 0;
+
   feesCollected = 850000;   // in rupees
   pendingFees = 150000;     // in rupees
   totalExpenses = 500000;   // in rupees
 
-//   recentActivities = [
-//     { activity: 'Admission of John Doe', date: '2025-08-14' },
-//     { activity: 'Fee payment by Class 10', date: '2025-08-13' },
-//     { activity: 'Sports event organized', date: '2025-08-10' },
-//   ];
+  //   recentActivities = [
+  //     { activity: 'Admission of John Doe', date: '2025-08-14' },
+  //     { activity: 'Fee payment by Class 10', date: '2025-08-13' },
+  //     { activity: 'Sports event organized', date: '2025-08-10' },
+  //   ];
+
+
+  getTeacherData() {
+    this.userService.getUsers().subscribe({
+      next: (users) => {
+        console.log("user", users);
+        this._allTeachersData = users.filter((user: User) => user.role === this._role);
+        this.totalTeachers = this._allTeachersData.length;
+        // console.log("_allteacherData", this._allTeachersData);
+        // this.rolesMap = this._allTeachersData.reduce((acc: any, role: any) => {
+        //   acc[role.id] = role.name;
+        //   return acc;
+        // }, {});
+        // console.log("this.role", this.rolesMap);
+      },
+      error: (err) => console.error('Error loading users:', err)
+    });
+  }
+
+  getClasses() {
+    this._academicsService.listClasses().subscribe(res => {
+      this._classes = res
+      console.log("res", res);
+      this.totalClasses = this._classes.length;
+      // if (res.length) {
+      //   this.classesMap = res.reduce((acc: any, role: any) => {
+      //     acc[role.id] = role.name;
+      //     return acc;
+      //   }, {});
+      // }
+    }
+    );
+  }
+
 
   ngAfterViewInit(): void {
     const chartDom = document.getElementById('attendanceChart')!;
@@ -51,7 +106,7 @@ export class DashboardComponent implements AfterViewInit {
       },
       xAxis: {
         type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
+        data: ['Class-1', 'Class-2', 'Class-3', 'Class-4', 'Class-5']
       },
       yAxis: {
         type: 'value'
@@ -67,6 +122,7 @@ export class DashboardComponent implements AfterViewInit {
       ]
     };
 
+
     myChart.setOption(option);
 
     // Make chart responsive
@@ -78,36 +134,71 @@ export class DashboardComponent implements AfterViewInit {
 
 
 
-        // This is the correct place to initialize ECharts.
+    // This is the correct place to initialize ECharts.
     this.createFinancialChart();
   }
 
-// }
+  getTotalStudents() {
+    // optionally pass filters
+    this.adminService.getAdmissions().subscribe({
+      next: (list) => {
+        // this.admissions = list;
+        // this.recalc();
+        this.totalStudents = list.length;
+        console.log("Total Students:", this.totalStudents);
+      },
+      error: (err) => console.error(err)
+    });
+  }
 
-// import { Component, AfterViewInit, OnInit } from '@angular/core';
-// import { MatCardModule } from '@angular/material/card';
-// import { MatTableModule } from '@angular/material/table';
-// import { MatIconModule } from '@angular/material/icon';
-// import { CommonModule } from '@angular/common';
-// import { MatButtonModule } from '@angular/material/button';
-// import { MatListModule } from '@angular/material/list';
-// import * as echarts from 'echarts';
+  // getTotalTeachers(){
+  //   // optionally pass filters
+  //   this.adminService.getTeachers().subscribe({
+  //     next: (list) => {
+  //       // this.teachers = list;
+  //       // this.recalc();
+  //     },
+  //     error: (err) => console.error(err)
+  //   });
+  // }
 
-// @Component({
-//   selector: 'app-dashboard',
-//   standalone: true, // Use this for standalone components in Angular 19
-//   imports: [
-//     MatCardModule,
-//     MatTableModule,
-//     MatIconModule,
-//     CommonModule,
-//     MatButtonModule,
-//     MatListModule
-//   ],
-//   templateUrl: './dashboard.component.html',
-//   styleUrl: './dashboard.component.css'
-// })
-// export class DashboardComponent implements OnInit, AfterViewInit {
+  // getTotalClasses(){
+  //   // optionally pass filters
+  //   this.adminService.getClasses().subscribe({
+  //     next: (list) => {
+  //       // this.classes = list;
+  //       // this.recalc();
+  //     },
+  //     error: (err) => console.error(err)
+  //   });
+  // }
+
+  // }
+
+  // import { Component, AfterViewInit, OnInit } from '@angular/core';
+  // import { MatCardModule } from '@angular/material/card';
+  // import { MatTableModule } from '@angular/material/table';
+  // import { MatIconModule } from '@angular/material/icon';
+  // import { CommonModule } from '@angular/common';
+  // import { MatButtonModule } from '@angular/material/button';
+  // import { MatListModule } from '@angular/material/list';
+  // import * as echarts from 'echarts';
+
+  // @Component({
+  //   selector: 'app-dashboard',
+  //   standalone: true, // Use this for standalone components in Angular 19
+  //   imports: [
+  //     MatCardModule,
+  //     MatTableModule,
+  //     MatIconModule,
+  //     CommonModule,
+  //     MatButtonModule,
+  //     MatListModule
+  //   ],
+  //   templateUrl: './dashboard.component.html',
+  //   styleUrl: './dashboard.component.css'
+  // })
+  // export class DashboardComponent implements OnInit, AfterViewInit {
   // Key Metrics
   // totalStudents: number = 0;
   // totalTeachers: number = 0;
@@ -119,6 +210,7 @@ export class DashboardComponent implements AfterViewInit {
   // newAdmissions: number = 0;
 
   // Data for additional sections
+
   recentActivities = [
     { activity: 'Admission of John Doe', date: new Date('2025-08-14') },
     { activity: 'Fee payment by Class 10', date: new Date('2025-08-13') },

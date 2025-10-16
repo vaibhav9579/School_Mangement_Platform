@@ -105,6 +105,7 @@ export class AdmissionFormComponent implements OnInit {
   load(id: number) {
     this.svc.getAdmission(id).subscribe({
       next: (ad) => {
+        console.log("admission data", ad);
         this.form.patchValue(ad);
         // documents available on ad.documents - handle as needed
       }

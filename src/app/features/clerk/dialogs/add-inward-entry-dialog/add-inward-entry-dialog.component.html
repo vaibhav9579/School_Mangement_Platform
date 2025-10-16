@@ -1,0 +1,65 @@
+<div class="p-6 bg-white rounded-lg shadow-md w-full max-w-lg mx-auto">
+  <h2 class="text-xl font-semibold mb-4 text-gray-800">
+    {{ isEditMode ? 'Update Inward Entry' : 'Add Inward Entry' }}
+  </h2>
+
+  <form [formGroup]="inwardForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Sender Details</label>
+      <textarea
+        formControlName="sender_details"
+        rows="2"
+        class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+      ></textarea>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Subject</label>
+      <textarea
+        formControlName="subject"
+        rows="2"
+        class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+      ></textarea>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Received Date</label>
+        <input
+          type="date"
+          formControlName="received_date"
+          class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+        />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Document Type</label>
+        <select
+          formControlName="document_type"
+          class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+        >
+          <option>Letter</option>
+          <option>Circular</option>
+          <option>Parcel</option>
+          <option>Invoice</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="flex justify-end gap-3 mt-4">
+      <button
+        type="button"
+        (click)="close()"
+        class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        [disabled]="inwardForm.invalid"
+        class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:bg-gray-400"
+      >
+        {{ isEditMode ? 'Update' : 'Save' }}
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,47 +1,52 @@
-<div class="p-0 bg-gray-100 min-h-screen">
-  <!-- <h1 class="text-2xl font-bold text-blue-700 mb-6">
-    Mark Attendance
-  </h1> -->
+<div class="p-6 bg-gray-50 min-h-screen">
+  <!-- <h1 class="text-2xl font-bold mb-4">Attendance - {{ classAttendance.class_id }} / {{ classAttendance.section_id }}</h1> -->
 
-  <div class="bg-white shadow rounded-lg p-6">
-    <h2 class="text-lg font-semibold text-blue-700 mb-4">
-      Attendance for Today ({{ todayDate }})
-    </h2>
+  <div *ngIf="loading" class="text-center text-gray-500">Loading...</div>
 
-    <table class="w-full text-left">
-      <thead>
-        <tr class="bg-gray-100">
-          <th class="p-3 text-gray-600 text-sm font-medium">STUDENT NAME</th>
-          <th class="p-3 text-gray-600 text-sm font-medium">CLASS</th>
-          <th class="p-3 text-gray-600 text-sm font-medium">STATUS</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let student of attendanceList; let i = index" class="border-b">
-          <td class="p-3">{{ student.name }}</td>
-          <td class="p-3">{{ student.class }}</td>
-          <td class="p-3">
-            <select
-              [(ngModel)]="student.status"
-              name="status{{i}}"
-              class="border rounded-lg p-2 w-40"
-            >
-              <option value="Present">Present</option>
-              <option value="Absent">Absent</option>
-              <option value="Leave">Leave</option>
-            </select>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <form [formGroup]="attendanceForm" (ngSubmit)="saveAttendance()" *ngIf="!loading">
+    <div class="overflow-x-auto max-h-[600px]">
+      <table class="table-auto w-full border border-gray-300">
+        <thead class="bg-gray-200 sticky top-0">
+          <tr>
+            <th class="border px-2 py-1">Sr.No</th>
+            <th class="border px-2 py-1">Student Name</th>
+            <th class="border px-2 py-1">Status</th>
+            <th class="border px-2 py-1">Arrival Time</th>
+            <th class="border px-2 py-1">Remark</th>
+            <th class="border px-2 py-1">Action</th>
+          </tr>
+        </thead>
+        <tbody formArrayName="records">
+          <tr *ngFor="let record of records.controls; let i=index" [formGroupName]="i" class="hover:bg-gray-100">
+            <td class="border px-2 py-1">{{ i + 1 }}</td>
+            <td class="border px-2 py-1">
+              {{ classAttendance.students[i].first_name }} {{ classAttendance.students[i].middle_name }} {{ classAttendance.students[i].last_name }}
+            </td>
+            <td class="border px-2 py-1">
+              <select formControlName="status" class="border px-2 py-1 rounded">
+                <option *ngFor="let option of statusOptions" [value]="option.value">{{ option.label }}</option>
+              </select>
+            </td>
+            <td class="border px-2 py-1">
+              <input type="time" formControlName="arrival_time" class="border px-2 py-1 rounded w-full"/>
+            </td>
+            <td class="border px-2 py-1">
+              <input type="text" formControlName="remark" class="border px-2 py-1 rounded w-full"/>
+            </td>
+            <td class="border px-2 py-1 text-center">
+              <button type="button" (click)="editRecord(i)" class="text-blue-500 hover:text-blue-700">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-    <div class="mt-6">
-      <button
-        (click)="saveAttendance()"
-        class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg flex items-center gap-2"
-      >
-        <i class="fas fa-save"></i> Save Attendance
+    <div class="mt-4 flex justify-end">
+      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+        Save Attendance
       </button>
     </div>
-  </div>
+  </form>
 </div>

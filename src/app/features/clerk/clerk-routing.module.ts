@@ -16,6 +16,7 @@ import { MarkMemoComponent } from './components/mark-memo/mark-memo.component';
 import { ShowMarkComponent } from './components/show-mark/show-mark.component';
 import { InwardRegistersComponent } from './components/inward-registers/inward-registers.component';
 import { OutwardRegisterComponent } from './components/outward-register/outward-register.component';
+import { StudentRecordComponent } from './components/student-record/student-record.component';
 export const CLERK_ROUTES: Routes = [
   {
     path: '',
@@ -25,7 +26,7 @@ export const CLERK_ROUTES: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'fee', component: FeeManagementComponent },
-      { path: 'attendance', component: AttendanceComponent },
+      { path: 'attendance', component: StudentRecordComponent },
       { path: 'studentrecord', component: NotificationComponent },
       { path: 'teacherrecord', component: ManageTeacherComponent },
       { path: 'payment', component: IdCardComponent },

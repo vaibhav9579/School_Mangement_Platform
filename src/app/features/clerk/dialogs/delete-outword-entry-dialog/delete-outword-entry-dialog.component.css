@@ -1,0 +1,84 @@
+
+/**
+.delete-dialog {
+  width: 100%;
+  max-width: 420px;
+}
+
+.dialog-title {
+  font-weight: 600;
+  text-align: center;
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+}
+
+.dialog-content {
+  font-size: 14px;
+  color: #333;
+}
+
+.danger-zone {
+  border: 1px solid #f44336;
+  background-color: #fff5f5;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.danger-title {
+  color: #c62828;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.warning-text {
+  color: #b71c1c;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.confirmation-text {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+button[color="warn"] {
+  background-color: #d32f2f;
+  color: white;
+}
+
+button[color="warn"]:disabled {
+  background-color: #f5b5b5;
+  color: #fff;
+}
+
+*/
+
+/* ✅ Responsive adjustments 
+@media (max-width: 600px) {
+  .delete-dialog {
+    max-width: 90vw;
+    padding: 0 10px;
+  }
+
+  .dialog-content {
+    font-size: 13px;
+  }
+
+  .danger-zone {
+    padding: 12px;
+  }
+
+  .danger-title {
+    font-size: 15px;
+  }
+}
+
+*/

@@ -44,6 +44,7 @@ public _totalStudents: number = 0;
       console.error('User ID is null');
     }
   }
+
   getTotalStudents(classId:number){
     this._admissionService.getAdmissionsByClass(classId).subscribe((count: any) =>{
       if(count.length>0){
@@ -53,18 +54,18 @@ public _totalStudents: number = 0;
   }
 
   markAttendance() {
-    this.router.navigate(['/attendance']);
+    this.router.navigate(['teacher/attendance']);
   }
 
   uploadResults() {
-    this.router.navigate(['/upload-results']);
+    this.router.navigate(['teacher/class']);
   }
 
   assignHomework() {
-    this.router.navigate(['/assign-homework']);
+    this.router.navigate(['teacher/assign-homework']);
   }
 
   chatWithStudents() {
-    this.router.navigate(['/chat']);
+    this.router.navigate(['teacher/chat']);
   }
 }

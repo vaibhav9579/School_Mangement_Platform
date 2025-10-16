@@ -1,3 +1,4 @@
+// Add MatProgressSpinnerModule and MatTooltipModule to your imports!
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
@@ -9,29 +10,47 @@ import { ManageroledialogComponent } from '../../dialogs/manageroledialog/manage
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // <-- ADD THIS
+import { MatTooltipModule } from '@angular/material/tooltip'; // <-- ADD THIS
 
 @Component({
   selector: 'app-add-role',
-  imports: [CommonModule, MatTableModule, MatButtonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatIconModule],
+  // Make sure to add the new modules to the imports array
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatButtonModule,
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatProgressSpinnerModule, // <-- ADD THIS
+    MatTooltipModule          // <-- ADD THIS
+  ],
   templateUrl: './add-role.component.html',
   styleUrls: ['./add-role.component.css']
 })
-export class AddRoleComponent {
-  displayedColumns = ['sno', 'name', 'description', 'actions'];
+export class AddRoleComponent implements OnInit { // <-- Implemented OnInit
+  displayedColumns = ['sno', 'name', 'actions'];
   dataSource: Roles[] = [];
+  isLoading = true; // <-- ADD THIS: Flag for loading spinner
 
-  
-
-  constructor(private roleService: RoleServiceService, private dialog: MatDialog) {}
+  constructor(private roleService: RoleServiceService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.loadRoles();
   }
 
   loadRoles() {
-    this.roleService.getRoles().subscribe(roles => this.dataSource = roles);
+    this.isLoading = true; // <-- Start loading
+    this.roleService.getRoles().subscribe(roles => {
+      this.dataSource = roles;
+      this.isLoading = false; // <-- Stop loading
+    });
   }
 
+  // The rest of your openRoleDialog function remains the same!
+  // ... (no changes needed for the openRoleDialog method)
   openRoleDialog(action: 'create' | 'edit' | 'view' | 'delete', index?: number) {
     const role = index !== undefined ? this.dataSource[index] : null;
 
@@ -40,7 +59,7 @@ export class AddRoleComponent {
       data: { action, role }
     }).afterClosed().subscribe(result => {
       if (!result) return;
-      switch(action) {
+      switch (action) {
         case 'create':
           this.roleService.addRole(result).subscribe(() => this.loadRoles());
           break;
@@ -50,6 +69,7 @@ export class AddRoleComponent {
           }
           break;
         case 'delete':
+          // HIGHLY RECOMMENDED: Add a confirmation dialog before deleting!
           if (role?.id !== undefined) {
             this.roleService.deleteRole(role.id).subscribe(() => this.loadRoles());
           }

@@ -1,0 +1,24 @@
+<h2 class="text-lg font-bold mb-2">Edit Attendance</h2>
+    <form [formGroup]="editForm" (ngSubmit)="save()">
+      <div class="mb-2">
+        <label>Status:</label>
+        <select formControlName="status" class="border px-2 py-1 rounded w-full">
+          <option value="present">Present</option>
+          <option value="absent">Absent</option>
+          <option value="late">Late</option>
+          <option value="leave">Leave</option>
+        </select>
+      </div>
+      <div class="mb-2">
+        <label>Arrival Time:</label>
+        <input type="time" formControlName="arrival_time" class="border px-2 py-1 rounded w-full"/>
+      </div>
+      <div class="mb-2">
+        <label>Remark:</label>
+        <input type="text" formControlName="remark" class="border px-2 py-1 rounded w-full"/>
+      </div>
+      <div class="flex justify-end mt-4">
+        <button type="button" (click)="dialogRef.close()" class="mr-2 px-4 py-2 rounded border">Cancel</button>
+        <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">Save</button>
+      </div>
+    </form>

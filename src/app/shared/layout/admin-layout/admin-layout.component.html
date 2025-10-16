@@ -1,102 +1,69 @@
-<div class="flex h-screen bg-gray-100">
-  <!-- Sidebar -->
-  <aside class="w-64 bg-blue-800 text-white flex flex-col cursor-pointer">
-    <!-- Logo -->
-    <div class="px-4 py-6 flex items-center gap-2 border-b border-blue-700">
-      <span class="text-lg font-bold tracking-wide">CONTROL CAMPUS</span>
+<div class="flex h-screen bg-gray-100 font-sans main-layout">
+  <aside class="bg-blue-800 text-white flex flex-col shadow-lg transition-all duration-300 ease-in-out overflow-y-auto overflow-x-hidden  thin-scrollbar"
+    [ngClass]="{'w-64': isSidebarOpen, 'w-20': !isSidebarOpen}">
+
+    <div class="px-4 py-8 flex items-center gap-2 border-b border-blue-700 h-[68px] overflow-hidden">
+      <button (click)="toggleSidebar()"
+        class="text-gray-600 hover:text-blue-600 focus:outline-none p-2 rounded-full hover:bg-gray-100 text-white">
+        <i class="bi bi-list text-2xl"></i>
+      </button>
+
+      <span class="text-lg font-bold tracking-wide transition-opacity duration-200 whitespace-nowrap"
+        [class.opacity-0]="!isSidebarOpen">
+        CONTROL CAMPUS
+      </span>
     </div>
 
-    <!-- Navigation -->
-    <nav class="flex-1 p-4 space-y-2">
-      <a (click)="navigateToSelDash('dashboard')" routerLinkActive="bg-blue-700"
-        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-        <i class="bi bi-house w-5 text-center"></i> Dashboard
-      </a>
+    <nav class="flex-1 space-y-2 ">
+      <div class="relative mb-4 transition-opacity duration-200" [class.opacity-0]="!isSidebarOpen"
+        [class.pointer-events-none]="!isSidebarOpen">
+        <i class="bi bi-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+        <input type="text" placeholder="Search..." [(ngModel)]="searchTerm"
+          class="w-full pl-10 pr-8 py-2 rounded-md bg-blue-500 text-white placeholder-gray-300 border border-blue-600 focus:border-white focus:ring-2 focus:ring-white outline-none transition" />
+        <button *ngIf="searchTerm" (click)="clearSearch()"
+          class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-300 hover:text-white focus:outline-none">
+          <i class="bi bi-x-lg text-sm"></i>
+        </button>
+      </div>
 
-      <a (click)="navigateToSelDash('addrole')" routerLinkActive="bg-blue-700"
-        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-        <i class="bi bi-house w-5 text-center"></i>Add Role
-      </a>
-
-      <a (click)="navigateToSelDash('dash')" routerLinkActive="bg-blue-700"
-        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-        <i class="bi bi-people w-5 text-center"></i> Manage User
-      </a>
-
-      <a (click)="navigateToSelDash('admission-approve')" routerLinkActive="bg-blue-700"
-        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-        <i class="bi bi-people w-5 text-center"></i> Admission Approval
-      </a>
-
-      <a (click)="navigateToSelDash('academic-structure')" routerLinkActive="bg-blue-700"
-        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-        <i class="bi bi-people w-5 text-center"></i> Academic Structure
-      </a>
-      
-      <a (click)="navigateToSelDash('apply-classteacher')" routerLinkActive="bg-blue-700"
-        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-        <i class="bi bi-people w-5 text-center"></i> Apply Class Teacher
-      </a>
-
-
-            <a (click)="navigateToSelDash('time-table')" routerLinkActive="bg-blue-700"
-        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-        <i class="bi bi-people w-5 text-center"></i> Time Table
-      </a>
-
-      <!-- 
-        <a (click)="navigateToSelDash('student')" routerLinkActive="bg-blue-700" class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-          <i class="bi bi-person-badge w-5 text-center"></i> Manage Students
-        </a> -->
-
-      <!-- <a (click)="navigateToSelDash('teacher')" routerLinkActive="bg-blue-700"
-        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-        <i class="bi bi-person-video3 w-5 text-center"></i> Manage Teachers
-      </a> -->
-
-      <a (click)="navigateToSelDash('class')" routerLinkActive="bg-blue-700"
-        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-        <i class="bi bi-person-video3 w-5 text-center"></i> Manage Classes
-      </a>
-
-      <!-- <a (click)="navigateToSelDash('fee')" routerLinkActive="bg-blue-700" class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-          <i class="bi bi-cash-coin w-5 text-center"></i> Fee Management
-        </a> -->
-
-      <!-- <a (click)="navigateToSelDash('result')" routerLinkActive="bg-blue-700" class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-          <i class="bi bi-upload w-5 text-center"></i> Result Upload
-        </a> -->
-
-      <!-- <a (click)="navigateToSelDash('id')" (click)="navigateToSelDash('id')" routerLinkActive="bg-blue-700" class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-          <i class="bi bi-card-heading w-5 text-center"></i> ID Card Generator
-        </a> -->
-
-      <a (click)="navigateToSelDash('leave-policy')" routerLinkActive="bg-blue-700"
-        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-        <i class="bi bi-bell w-5 text-center"></i> Leave Policy
-      </a>
-
-      <a (click)="navigateToSelDash('leave')" routerLinkActive="bg-blue-700"
-        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-        <i class="bi bi-bell w-5 text-center"></i> Leave Approval
-      </a>
-
-      <a (click)="navigateToSelDash('Allotleave')" routerLinkActive="bg-blue-700"
-        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-        <i class="bi bi-bell w-5 text-center"></i> Leave Allotment
-      </a>
-
-      <a (click)="navigateToSelDash('notification')" (click)="navigateToSelDash('notification')"
-        routerLinkActive="bg-blue-700" class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition">
-        <i class="bi bi-bell w-5 text-center"></i> Notifications
+      <a *ngFor="let item of filteredMenuItems()" [routerLink]="['/admin', item.path]"
+        routerLinkActive="bg-blue-700 font-semibold"
+        class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition" [title]="item.label">
+        <i class="bi {{ item.icon }} w-5 text-center text-lg min-w-[48px]"></i>
+        <span class="transition-opacity duration-200 whitespace-nowrap" [class.opacity-0]="!isSidebarOpen">
+          {{ item.label }}
+        </span>
       </a>
     </nav>
   </aside>
 
-  <!-- Main Content Area -->
-  <div class="flex-1 flex flex-col">
-    <!-- Top Header -->
-    <header class="bg-blue-800 text-white shadow px-6 py-4 flex justify-between items-center">
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- <header class="bg-blue-800 text-gray-800 shadow px-6 py-4 flex justify-between items-center z-10">
+      <div class="flex items-center gap-4">
+
+        <h1 class="text-xl font-semibold">{{ pageTitle }}</h1>
+      </div>
+
+      <div class="relative group">
+        <button class="flex items-center gap-3 focus:outline-none">
+          <span class="text-gray-700 hidden sm:inline">{{ _userName }} <b>({{ _userRole }})</b></span>
+          <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-lg">
+            {{ _userName.charAt(0).toUpperCase() }}
+          </div>
+        </button>
+
+        <div
+          class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg hidden group-hover:block ring-1 ring-black ring-opacity-5">
+          <div class="py-1">
+          <button (click)="logout()" class="flex items-center gap-2 w-full px-4 py-2 hover:bg-gray-100 text-gray-700">
+            <i class="bi bi-box-arrow-right"></i> Logout
+          </button>
+          </div>
+        </div>
+      </div>
+    </header> -->
+
+      <header class="bg-blue-800 text-white shadow px-6 py-4 flex justify-between items-center">
       <h1 class="text-xl font-semibold ">{{ pageTitle }}</h1>
 
       <!-- Admin User Dropdown -->
@@ -115,8 +82,7 @@
       </div>
     </header>
 
-    <!-- Main Router Content -->
-    <main class="flex-1 p-0 overflow-auto border-b">
+    <main class="flex-1 overflow-auto bg-gray-100 p-6 thin-scrollbar">
       <router-outlet></router-outlet>
     </main>
   </div>

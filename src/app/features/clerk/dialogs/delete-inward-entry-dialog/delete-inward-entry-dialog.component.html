@@ -1,0 +1,35 @@
+<div class="p-6 bg-white rounded-lg shadow-md w-full max-w-md mx-auto">
+  <h2 class="text-lg font-semibold text-red-600 mb-2">Danger Zone</h2>
+  <p class="text-gray-700 mb-4">
+    You are about to <strong>delete</strong> the inward entry:
+    <span class="font-semibold text-gray-900">"{{ data.subject }}"</span>
+  </p>
+
+  <p class="text-sm text-gray-600 mb-4">
+    To confirm, please type <span class="font-semibold text-gray-800">{{ data.subject }}</span>
+    below:
+  </p>
+
+  <input
+    type="text"
+    [(ngModel)]="confirmText"
+    placeholder="Type subject name..."
+    class="w-full border border-gray-300 rounded-md p-2 mb-4"
+  />
+
+  <div class="flex justify-end gap-3">
+    <button
+      (click)="close()"
+      class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
+    >
+      Cancel
+    </button>
+    <button
+      (click)="deleteEntry()"
+      [disabled]="confirmText !== data.subject"
+      class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:bg-gray-400"
+    >
+      Delete
+    </button>
+  </div>
+</div>

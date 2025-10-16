@@ -38,8 +38,8 @@ export class FillClasswiseMarkComponent implements OnInit {
   public _datasource = new MatTableDataSource<any>();
   public _userId: any;
 
-
-  displayedColumns: string[] = ['id', 'name', 'class', 'contact', 'email', 'actions'];
+  // displayedColumns: string[] = ['id', 'first_name', 'middle_name', 'last_name','contact', 'email', 'actions'];
+  displayedColumns: string[] = ['id', 'first_name', 'middle_name', 'last_name', 'actions'];
 
   constructor(
     private _academicService: AcademicServiceService,
@@ -69,110 +69,112 @@ export class FillClasswiseMarkComponent implements OnInit {
         // this._datasource = studentData
         this._datasource.data = studentData.map((s: any) => ({
           id: s.id,
-          name: s.full_name || `${s.first_name} ${s.last_name}`,
-          class: s.class_id,
-          contact: s.candidate_contact,
-          email: s.candidate_mail,
+          first_name: s.first_name,
+          middle_name: s.middle_name,
+          last_name: s.last_name,
+          // class: s.class_id,
+          // contact: s.candidate_contact,
+          // email: s.candidate_mail,
           student_id: s.id
         }));
       }
     })
   }
 
-fillMark(studentId: number) {
-  console.log("Selected student:", studentId);
+  fillMark(studentId: number) {
+    console.log("Selected student:", studentId);
 
-  // 1️⃣ Step 1 - Fetch subjects taught by this teacher for current class
-  this._subjectService.getSubjectsByTeacherAndClass(this._userId, this._classId).subscribe({
-    next: (subjects) => {
-      if (!subjects || subjects.length === 0) {
-        this._snackBar.open('No subjects assigned for this class.', 'Close', { duration: 2500 });
-        return;
-      }
-
-      // 2️⃣ Step 2 - Open dialog to fill marks
-      const dialogRef = this.dialog.open(FillMarkDialogComponent, {
-        width: '400px',
-        data: {
-          subjects,
-          outOf: 100,
-          studentId,
-        },
-      });
-
-      // 3️⃣ Step 3 - After dialog closed
-      dialogRef.afterClosed().subscribe(result => {
-        if (!result) return; // cancelled
-
-        console.log("Filled marks data:", result);
-        const selectedSubject = subjects.find(s => s.name === result.subject);
-        if (!selectedSubject) {
-          console.error("Invalid subject selected!");
+    // 1️⃣ Step 1 - Fetch subjects taught by this teacher for current class
+    this._subjectService.getSubjectsByTeacherAndClass(this._userId, this._classId).subscribe({
+      next: (subjects) => {
+        if (!subjects || subjects.length === 0) {
+          this._snackBar.open('No subjects assigned for this class.', 'Close', { duration: 2500 });
           return;
         }
 
-        // Payload for backend
-        const payload = {
-          student_id: result.studentId,
-          subject_code: selectedSubject.id,
-          total_mark: result.outOf,
-          obtained_marks: result.obtained,
-        };
-
-        // 4️⃣ Step 4 - Check if mark already exists for this subject/student
-        this._markService.list({ student_id: studentId, subject_code: selectedSubject.id }).subscribe({
-          next: (existing: any[]) => {
-            if (existing && existing.length > 0) {
-              // UPDATE existing
-              const markId = existing[0].id;
-              this._markService.update(markId, payload).subscribe({
-                next: () => {
-                  this._snackBar.open('Marks updated successfully ✅', 'OK', { duration: 2500 });
-                },
-                error: (err) => {
-                  console.error('Error updating marks', err);
-                  this._snackBar.open('Error updating marks ❌', 'Close', { duration: 2500 });
-                }
-              });
-            } else {
-              // CREATE new
-              this._markService.create(payload).subscribe({
-                next: () => {
-                  this._snackBar.open('Marks saved successfully ✅', 'OK', { duration: 2500 });
-                },
-                error: (err) => {
-                  console.error('Error saving marks', err);
-                  this._snackBar.open('Error saving marks ❌', 'Close', { duration: 2500 });
-                }
-              });
-            }
+        // 2️⃣ Step 2 - Open dialog to fill marks
+        const dialogRef = this.dialog.open(FillMarkDialogComponent, {
+          width: '400px',
+          data: {
+            subjects,
+            outOf: 100,
+            studentId,
           },
-          error: (err) => {
-            console.error('Error checking existing marks', err);
-          }
         });
-      });
-    },
-    error: (err) => {
-      console.error("Error fetching subjects", err);
-      this._snackBar.open('Failed to fetch subjects', 'Close', { duration: 2500 });
-    }
-  });
-}
 
-updateMark(id: number, updated: any) {
-  this._markService.update(id, updated).subscribe({
-    next: () => this._snackBar.open('Mark updated successfully', 'OK', { duration: 2000 }),
-    error: () => this._snackBar.open('Failed to update mark', 'Close', { duration: 2000 }),
-  });
-}
+        // 3️⃣ Step 3 - After dialog closed
+        dialogRef.afterClosed().subscribe(result => {
+          if (!result) return; // cancelled
 
-deleteMark(id: number) {
-  if (confirm('Are you sure you want to delete this mark?')) {
-    this._markService.delete(id).subscribe({
-      next: () => this._snackBar.open('Mark deleted successfully', 'OK', { duration: 2000 }),
-      error: () => this._snackBar.open('Failed to delete mark', 'Close', { duration: 2000 }),
+          console.log("Filled marks data:", result);
+          const selectedSubject = subjects.find(s => s.name === result.subject);
+          if (!selectedSubject) {
+            console.error("Invalid subject selected!");
+            return;
+          }
+
+          // Payload for backend
+          const payload = {
+            student_id: result.studentId,
+            subject_code: selectedSubject.id,
+            total_mark: result.outOf,
+            obtained_marks: result.obtained,
+          };
+
+          // 4️⃣ Step 4 - Check if mark already exists for this subject/student
+          this._markService.list({ student_id: studentId, subject_code: selectedSubject.id }).subscribe({
+            next: (existing: any[]) => {
+              if (existing && existing.length > 0) {
+                // UPDATE existing
+                const markId = existing[0].id;
+                this._markService.update(markId, payload).subscribe({
+                  next: () => {
+                    this._snackBar.open('Marks updated successfully ✅', 'OK', { duration: 2500 });
+                  },
+                  error: (err) => {
+                    console.error('Error updating marks', err);
+                    this._snackBar.open('Error updating marks ❌', 'Close', { duration: 2500 });
+                  }
+                });
+              } else {
+                // CREATE new
+                this._markService.create(payload).subscribe({
+                  next: () => {
+                    this._snackBar.open('Marks saved successfully ✅', 'OK', { duration: 2500 });
+                  },
+                  error: (err) => {
+                    console.error('Error saving marks', err);
+                    this._snackBar.open('Error saving marks ❌', 'Close', { duration: 2500 });
+                  }
+                });
+              }
+            },
+            error: (err) => {
+              console.error('Error checking existing marks', err);
+            }
+          });
+        });
+      },
+      error: (err) => {
+        console.error("Error fetching subjects", err);
+        this._snackBar.open('Failed to fetch subjects', 'Close', { duration: 2500 });
+      }
     });
   }
-}
+
+  updateMark(id: number, updated: any) {
+    this._markService.update(id, updated).subscribe({
+      next: () => this._snackBar.open('Mark updated successfully', 'OK', { duration: 2000 }),
+      error: () => this._snackBar.open('Failed to update mark', 'Close', { duration: 2000 }),
+    });
+  }
+
+  deleteMark(id: number) {
+    if (confirm('Are you sure you want to delete this mark?')) {
+      this._markService.delete(id).subscribe({
+        next: () => this._snackBar.open('Mark deleted successfully', 'OK', { duration: 2000 }),
+        error: () => this._snackBar.open('Failed to delete mark', 'Close', { duration: 2000 }),
+      });
+    }
+  }
 }

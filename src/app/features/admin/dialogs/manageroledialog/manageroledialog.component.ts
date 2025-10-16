@@ -1,24 +1,27 @@
-import { Component, OnInit , Inject} from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { Roles } from '../../models/roles';
 import { RoleServiceService } from '../../../../shared/services/role-service.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-manageroledialog',
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, MatIconModule],
   templateUrl: './manageroledialog.component.html',
   styleUrls: ['./manageroledialog.component.css']
 })
 export class ManageroledialogComponent implements OnInit {
-roleForm: FormGroup;
-public roleName: string = "";
+  roleForm: FormGroup;
+  public roleName: string = "";
 
   // roles: string[] = ['Admin', 'Teacher', 'Clerk', 'Student', 'Principal', 'Vice Principal', 'Accountant', 'Librarian', 'Counselor', 'Transport Manager', 'Hostel Manager', 'Lab Assistant', 'Sports Coach', 'Nurse', 'Receptionist', 'Security', 'Cleaner', 'Gardener' ,'SchoolBus-Driver', 'SchoolBus-Conductor', 'Cafeteria-Staff', 'IT-Support', 'Event-Coordinator', 'Volunteer', 'Parent', 'Alumni'];
 
-// public roles: string[] = [];
-  roles: string[] = ['Admin', 'Teacher', 'Clerk', 'Student'];
+  roles: string[] = ['Admin', 'Teacher', 'Clerk', 'Student', 'Principal', 'Vice Principal', 'Accountant', 'Receptionist', 'Security', 'Cleaner', 'Gardener', 'SchoolBus-Driver', 'SchoolBus-Conductor', 'Event-Coordinator', 'Volunteer', 'Parent',];
+
+  // public roles: string[] = [];
+  // roles: string[] = ['Admin', 'Teacher', 'Clerk', 'Student'];
   action: 'create' | 'edit' | 'view' | 'delete';
 
   ngOnInit(): void {
@@ -46,8 +49,8 @@ public roleName: string = "";
 
   onSubmit() {
     if (this.action === 'delete') {
-      if(this.roleName === this.data.role?.name){
-      this.dialogRef.close(true);
+      if (this.roleName === this.data.role?.name) {
+        this.dialogRef.close(true);
       }
     } else if (this.roleForm.valid) {
       this.dialogRef.close(this.roleForm.value);

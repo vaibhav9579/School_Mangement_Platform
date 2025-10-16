@@ -1,0 +1,53 @@
+ <div class="dialog-container">
+    <h2 class="dialog-title">{{ data.isEdit ? 'Edit Dispatch' : 'New Dispatch' }}</h2>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-body">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="label">Recipient Details</label>
+          <textarea formControlName="recipient_details" rows="3" class="input"></textarea>
+        </div>
+
+        <div>
+          <label class="label">Subject</label>
+          <textarea formControlName="subject" rows="3" class="input"></textarea>
+        </div>
+
+        <div>
+          <label class="label">Dispatch Date</label>
+          <input type="date" formControlName="dispatch_date" class="input">
+        </div>
+
+        <div>
+          <label class="label">Document Type</label>
+          <select formControlName="document_type" class="input">
+            <option>Letter</option>
+            <option>Certificate</option>
+            <option>Notice</option>
+            <option>Report</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="label">Dispatch Mode</label>
+          <select formControlName="dispatch_mode" class="input">
+            <option>Post</option>
+            <option>Courier</option>
+            <option>Hand Delivery</option>
+            <option>Email</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="label">Tracking / Reference No.</label>
+          <input formControlName="tracking_number" type="text" class="input">
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="button" mat-button (click)="dialogRef.close()">Cancel</button>
+        <button type="submit" [disabled]="form.invalid"
+          class="save-btn">{{ data.isEdit ? 'Update' : 'Save' }}</button>
+      </div>
+    </form>
+  </div>

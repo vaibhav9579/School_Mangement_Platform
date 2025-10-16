@@ -36,4 +36,9 @@ export class InwardService {
   update(id: number, data: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/${id}`, data);
   }
+
+  delete(id: number): Observable<any> {
+    console.log("Inward Service Delete ID: ", id);
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
 }

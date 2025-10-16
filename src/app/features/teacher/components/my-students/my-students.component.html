@@ -1,13 +1,13 @@
 <div class="p-4 bg-gray-100 min-h-screen">
   <div class="bg-white shadow rounded-lg p-4">
-    <h2 class="text-xl font-bold mb-4">My Students</h2>
+    <h2 class="text-xl font-bold mb-4">{{assignedClasses[0].name}}</h2>
 
     <table mat-table [dataSource]="dataSource" matSort class="w-full">
 
       <!-- ID Column -->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-        <td mat-cell *matCellDef="let student"> {{ student.id }} </td>
+        <td mat-cell *matCellDef="let student; let i = index;"> {{ i + 1 }} </td>
       </ng-container>
 
       <!-- Name Column -->
@@ -17,12 +17,12 @@
       </ng-container>
 
       <!-- Class Column -->
-      <ng-container matColumnDef="class">
+      <!-- <ng-container matColumnDef="class">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Class </th>
         <td mat-cell *matCellDef="let student"> {{ student.class }} </td>
-      </ng-container>
+      </ng-container> -->
 
-      
+
       <!-- Cotact Column -->
       <ng-container matColumnDef="contact">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact </th>
@@ -40,11 +40,12 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let student">
-          <button mat-button color="primary" (click)="viewDetails(student)">
-            <mat-icon>visibility</mat-icon> View
+          <button mat-flat-button color="primary" class="!rounded-full"(click)="viewDetails(student)">
+            <mat-icon class="mr-2">visibility</mat-icon> View Details
           </button>
+
         </td>
-      </ng-container> 
+      </ng-container>
 
       <!-- Header + Rows -->
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

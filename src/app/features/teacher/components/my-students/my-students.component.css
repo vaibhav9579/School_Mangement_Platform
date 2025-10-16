@@ -1,0 +1,16 @@
+/* Make the outline form field in the header less bulky */
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+/* Ensure the mobile card avatar looks good */
+.mat-mdc-card-header .mat-mdc-card-avatar {
+    height: 40px;
+    width: 40px;
+    font-size: 1.25rem; /* 20px */
+}
+
+/* Ensure actions align nicely in the mobile card */
+.mat-mdc-card-actions {
+    padding: 0 16px 8px 16px !important;
+}

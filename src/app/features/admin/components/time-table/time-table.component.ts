@@ -7,13 +7,13 @@ import { TimetableService } from '../../../../shared/services/timetable.service'
 import { TimeSlot, Assignment, TimetableEntry, Teacher, Subject, Class, Section} from '../../../../shared/models/timetable.models';
 import { CommonModule } from '@angular/common';
 
-
 @Component({
   selector: 'app-time-table',
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './time-table.component.html',
   styleUrl: './time-table.component.css'
 })
+
 export class TimeTableComponent {
  activeTab: 'builder' | 'slots' | 'assignments' = 'builder';
 

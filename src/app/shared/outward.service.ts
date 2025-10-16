@@ -17,7 +17,7 @@ export interface Outward {
   providedIn: 'root'
 })
 export class OutwardService {
- private apiUrl = 'http://localhost:5000/api/outward';
+  private apiUrl = 'http://localhost:5000/api/outward';
 
   constructor(private http: HttpClient) { }
 
@@ -33,12 +33,17 @@ export class OutwardService {
 
   // Additional methods you might need later
   // GET: a single entry by ID
-  // getById(id: number): Observable<Outward> {
-  //   return this.http.get<Outward>(`${this.apiUrl}/${id}`);
-  // }
+  getById(id: number): Observable<Outward> {
+    return this.http.get<Outward>(`${this.apiUrl}/${id}`);
+  }
 
   // PUT: update an existing entry
-  // update(id: number, data: any): Observable<any> {
-  //   return this.http.put(`${this.apiUrl}/${id}`, data);
-  // }
+  update(id: number, data: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, data);
+  }
+
+  // Add this method to outward.service.ts
+  delete(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
 }
